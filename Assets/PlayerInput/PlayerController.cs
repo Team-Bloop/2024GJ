@@ -6,15 +6,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Rigidbody2D rb;
 
-    [SerializeField]
-    private float moveSpeed;
-
     private PlayerInputActions input = null;
     private Vector2 moveVector = Vector2.zero;
+    private float moveSpeed = 0f;
 
     private void Awake()
     {
         input = new PlayerInputActions();
+        moveSpeed = GetComponent<PlayerManager>().MovementSpeed;
     }
 
     private void OnEnable()
