@@ -40,15 +40,15 @@ public class OrbSpawner : MonoBehaviour
         orbCount = GetComponentsInChildren<Orb>().Length;  
         currentTime = 0f;
 
-        if (orbCount > maxOrbSpawn)
+        if (orbCount + initialOrbSpawn > maxOrbSpawn)
         {
             Utility.Quit();
-            throw new ArgumentException("Child Orbs in OrbSpawner exceeded maxOrbSpawn");
+            throw new ArgumentException("Child Orbs in OrbSpawner + InitialOrbSpawn exceeded maxOrbSpawn");
         }
 
         if (initialOrbSpawn > 0)
         {
-            Spawn(initialOrbSpawn);
+            Spawn(initialOrbSpawn); // Spawning will increment orbCount
         }
     }
 
