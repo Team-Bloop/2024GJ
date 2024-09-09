@@ -1,11 +1,13 @@
+using System;
 using UnityEngine;
+using GeneralUtility;
 
-public class Boop : MonoBehaviour
+public class Orb : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Time in seconds")]
     [Min(0f)]
-    private float timeToCollect;
+    private float initialTimeToCollect;
 
     [SerializeField]
     [Tooltip("Level(s) given to player when collected")]
@@ -17,14 +19,16 @@ public class Boop : MonoBehaviour
     private Color targetColor;
 
     private float currentTime = 0f;
-    private SpriteRenderer spriteRenderer;
+    private float timeToCollect;
 
+    private SpriteRenderer spriteRenderer;
     private Color initialColor;
     private Color tempColor;
     private float completionAmt;
 
     private void Start()
     {
+        timeToCollect = initialTimeToCollect;
         spriteRenderer = GetComponent<SpriteRenderer>();
         tempColor = spriteRenderer.color;
         initialColor = spriteRenderer.color;
@@ -32,14 +36,28 @@ public class Boop : MonoBehaviour
 
     private void Reset()
     {
-        timeToCollect = 0f;
+        initialTimeToCollect = 0f;
         level = 1;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        PlayerManager player = collision.GetComponent<PlayerManager>();
+        timeToCollect = (1 - player.CollectSpeed) * initialTimeToCollect;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         currentTime += Time.deltaTime;
-        completionAmt = currentTime / timeToCollect;
+
+        if (timeToCollect == 0)
+        {
+            completionAmt = 0;
+        }
+        else
+        {
+            completionAmt = currentTime / timeToCollect;
+        }
 
         if (completionAmt >= 0 && completionAmt <= 1)
         {

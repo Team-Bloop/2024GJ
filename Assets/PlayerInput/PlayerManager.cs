@@ -15,11 +15,13 @@ public class PlayerManager : MonoBehaviour
     private float movementSpeed;
 
     private float currentHealth;
+    private float collectSpeed; // 0 - 1, ie: 0.9 -> 90% faster
     private int level;
 
     void Start()
     {
         currentHealth = maxHealth;
+        collectSpeed = 0f;
         level = 0;
     }
 
@@ -59,6 +61,21 @@ public class PlayerManager : MonoBehaviour
     public float CurrentHealth
     {
         get { return currentHealth; }
+    }
+
+    public float CollectSpeed
+    {
+        get { return collectSpeed; }
+        set
+        {
+            if (value < 0 || value > 1)
+            {
+                Utility.Quit();
+                throw new ArgumentException("CollectSpeed value needs to be between 0 and 1 (both inclusive)");
+            }
+
+            collectSpeed = value;
+        }
     }
 
     public int Level
