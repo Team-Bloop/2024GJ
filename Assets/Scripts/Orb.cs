@@ -18,7 +18,7 @@ public class Orb : MonoBehaviour
     [Tooltip("Color when orb has been collected")]
     private Color targetColor;
 
-    private float currentTime = 0f;
+    private float currentTime;
     private float timeToCollect;
 
     private SpriteRenderer spriteRenderer;
@@ -26,18 +26,47 @@ public class Orb : MonoBehaviour
     private Color tempColor;
     private float completionAmt;
 
+    // temp inefficient way until we get sprite anims down
+    private bool isDying; 
+    private Transform transform;
+    private float deathAnimTime;
+
     private void Start()
     {
+        currentTime = 0f;
         timeToCollect = initialTimeToCollect;
         spriteRenderer = GetComponent<SpriteRenderer>();
         tempColor = spriteRenderer.color;
         initialColor = spriteRenderer.color;
+
+        isDying = false; 
+        transform = GetComponent<Transform>();
+        deathAnimTime = 0.5f;
     }
 
     private void Reset()
     {
         initialTimeToCollect = 0f;
         level = 1;
+    }
+
+    private void Update()
+    {
+        if (isDying)
+        {
+            deathAnimTime -= Time.deltaTime;
+            float newScale = Mathf.Lerp(2, 0, deathAnimTime);
+            Vector3 vector3 = new Vector3(newScale, newScale, newScale);
+            transform.localScale = vector3;
+
+            tempColor.a = Mathf.Lerp(0, 1, deathAnimTime);
+            spriteRenderer.color = tempColor;
+
+            if (deathAnimTime < 0)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -91,6 +120,11 @@ public class Orb : MonoBehaviour
     {
         PlayerManager player = collision.GetComponent<PlayerManager>();
         Debug.Log(player.IncreaseLevel(level));
-        Destroy(gameObject);
+
+        isDying = true;
+        foreach (BoxCollider2D collider in GetComponents<BoxCollider2D>())
+        {
+            collider.enabled = false;
+        }
     }
 }
