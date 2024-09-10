@@ -1,28 +1,109 @@
+using System;
 using UnityEngine;
+using GeneralUtility;
 
-public class Boop : MonoBehaviour
+public class Orb : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Time in seconds")]
     [Min(0f)]
-    private float timeToCollect;
+    private float initialTimeToCollect;
 
     [SerializeField]
     [Tooltip("Level(s) given to player when collected")]
     [Min(1)]
     private int level;
 
-    private float currentTime = 0f;
+    [SerializeField]
+    [Tooltip("Color when orb has been collected")]
+    private Color targetColor;
+
+    private float currentTime;
+    private float timeToCollect;
+
+    private SpriteRenderer spriteRenderer;
+    private Color initialColor;
+    private Color tempColor;
+    private float completionAmt;
+
+    // temp inefficient way until we get sprite anims down
+    private bool isDying; 
+    private Transform transform;
+    private float deathAnimTime;
+
+    private void Start()
+    {
+        currentTime = 0f;
+        timeToCollect = initialTimeToCollect;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        tempColor = spriteRenderer.color;
+        initialColor = spriteRenderer.color;
+
+        isDying = false; 
+        transform = GetComponent<Transform>();
+        deathAnimTime = 0.5f;
+    }
 
     private void Reset()
     {
-        timeToCollect = 0f;
+        initialTimeToCollect = 0f;
         level = 1;
+    }
+
+    private void Update()
+    {
+        if (isDying)
+        {
+            deathAnimTime -= Time.deltaTime;
+            float newScale = Mathf.Lerp(2, 0, deathAnimTime);
+            Vector3 vector3 = new Vector3(newScale, newScale, newScale);
+            transform.localScale = vector3;
+
+            tempColor.a = Mathf.Lerp(0, 1, deathAnimTime);
+            spriteRenderer.color = tempColor;
+
+            if (deathAnimTime < 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        PlayerManager player = collision.GetComponent<PlayerManager>();
+        timeToCollect = (1 - player.CollectSpeed) * initialTimeToCollect;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         currentTime += Time.deltaTime;
+
+        if (timeToCollect == 0)
+        {
+            completionAmt = 0;
+        }
+        else
+        {
+            completionAmt = currentTime / timeToCollect;
+        }
+
+        if (completionAmt >= 0 && completionAmt <= 1)
+        {
+            tempColor.r = Mathf.Lerp(initialColor.r, targetColor.r, completionAmt);
+        }
+
+        if (completionAmt >= 0 && completionAmt <= 1)
+        {
+            tempColor.g = Mathf.Lerp(initialColor.g, targetColor.g, completionAmt);
+        }
+
+        if (completionAmt >= 0 && completionAmt <= 1)
+        {
+            tempColor.b = Mathf.Lerp(initialColor.b, targetColor.b, completionAmt);
+        }
+
+        spriteRenderer.color = tempColor;
 
         if (currentTime > timeToCollect)
         {
@@ -30,15 +111,20 @@ public class Boop : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public float CompletionAmt
     {
-        currentTime = 0f;
+        get { return completionAmt; }
     }
 
     private void OnCollected(Collider2D collision)
     {
         PlayerManager player = collision.GetComponent<PlayerManager>();
         Debug.Log(player.IncreaseLevel(level));
-        Destroy(gameObject);
+
+        isDying = true;
+        foreach (BoxCollider2D collider in GetComponents<BoxCollider2D>())
+        {
+            collider.enabled = false;
+        }
     }
 }
