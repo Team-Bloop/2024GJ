@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     private Vector2 moveVector = Vector2.zero;
     private float moveSpeed = 0f;
 
+    [SerializeField]
+    private GameObject pauseMenu;
+
     private void Awake()
     {
         input = new PlayerInputActions();
@@ -55,6 +58,20 @@ public class Player : MonoBehaviour
 
     private void OnPause(InputAction.CallbackContext context)
     {
-        Debug.Log("Pause");
+        pauseToggle();
+    }
+
+    public void pauseToggle() {
+        if (pauseMenu.activeSelf == false) {
+            // Debug.Log("Pause");
+            // pause
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0;
+        } else {
+            // Debug.Log("Play");
+            // play
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1;
+        }
     }
 }
