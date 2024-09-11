@@ -7322,6 +7322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealValue: 1
   SpeedIncrement: 1
+  stormDetect: {fileID: 0}
 --- !u!114 &1545921228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7335,6 +7336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
+  maxCharges: 8
   movementSpeed: 10
   EXPUI: {fileID: 900036912}
 --- !u!114 &1545921229
