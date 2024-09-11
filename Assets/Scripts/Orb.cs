@@ -137,7 +137,7 @@ public class Orb : MonoBehaviour
     private void OnCollected(Collider2D collision)
     {
         PlayerManager player = collision.GetComponent<PlayerManager>();
-        Debug.Log($"Current Level: {player.IncreaseLevel(exp)}");
+        Debug.Log(player.IncreaseEXP(exp));
         Debug.Log($"Current Charge: {player.IncreaseCharges(charge)}");
 
         isDying = true;
