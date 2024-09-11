@@ -29,6 +29,7 @@ public class Orb : MonoBehaviour
     private Color tempColor;
     private float completionAmt;
     private OrbSpawner orbSpawner;
+    private int spawnLocationIdx;
 
     // temp inefficient way until we get sprite anims down
     private bool isDying; 
@@ -43,6 +44,7 @@ public class Orb : MonoBehaviour
         tempColor = spriteRenderer.color;
         initialColor = spriteRenderer.color;
         orbSpawner = GameObject.FindGameObjectWithTag("OrbSpawner").GetComponent<OrbSpawner>();
+        spawnLocationIdx = -1;
 
         isDying = false; 
         transform = GetComponent<Transform>();
@@ -132,6 +134,12 @@ public class Orb : MonoBehaviour
     public float CompletionAmt
     {
         get { return completionAmt; }
+    }
+
+    public int SpawnLocationIdx
+    {
+        get { return spawnLocationIdx; }
+        set { spawnLocationIdx = value; }
     }
 
     private void OnCollected(Collider2D collision)
