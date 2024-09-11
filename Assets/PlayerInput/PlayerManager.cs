@@ -5,10 +5,15 @@ using GeneralUtility;
 public class PlayerManager : MonoBehaviour
 {
     private const float MIN_MAX_HEALTH = 1f;
+    private const int MAX_CHARGES = 8;
 
     [SerializeField]
     [Min(MIN_MAX_HEALTH)]
     private float maxHealth;
+
+    [SerializeField]
+    [Min(MAX_CHARGES)]
+    private float maxCharges;
 
     [SerializeField]
     [Min(0f)]
@@ -17,6 +22,7 @@ public class PlayerManager : MonoBehaviour
     private float currentHealth;
     private float collectSpeed; // 0 - 1, ie: 0.9 -> 90% faster
     private int level;
+    private int charges;
 
     void Start()
     {
@@ -28,6 +34,7 @@ public class PlayerManager : MonoBehaviour
     private void Reset()
     {
         maxHealth = MIN_MAX_HEALTH;
+        maxCharges = MAX_CHARGES;
     }
 
     public float MaxHealth
@@ -83,6 +90,11 @@ public class PlayerManager : MonoBehaviour
         get { return level; }
     }
 
+    public int Charges
+    {
+        get { return charges; }
+    }
+
     // Use negative amt to "heal"
     public float Damage(float amt)
     {
@@ -118,6 +130,24 @@ public class PlayerManager : MonoBehaviour
 
         level += amt;
         return level;
+    }
+
+    // Use negative to decrease charges
+    public int IncreaseCharges(int amt)
+    {
+        if (amt == 0)
+        {
+            Debug.LogWarning("IncreaseCharges() amt is 0 which does nothing");
+        }
+
+        charges += amt;
+
+        if (charges > MAX_CHARGES)
+        {
+            charges = MAX_CHARGES; 
+        }
+
+        return charges;
     }
 
     private void Die()

@@ -191,4 +191,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialTimeToCollect: 2
   level: 2
+  charge: 1
   targetColor: {r: 1, g: 1, b: 1, a: 0}

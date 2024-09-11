@@ -8,10 +8,11 @@ public class PlayerAbilityManager : MonoBehaviour
     float HealValue = 1;
     [SerializeField]
     float SpeedIncrement = 1;
-
-    PlayerManager playerManager;
+    [SerializeField]
     StormDetect stormDetect;
 
+    PlayerManager playerManager;
+    
 
     private void Start()
     {

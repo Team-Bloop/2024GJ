@@ -13,6 +13,11 @@ public class Orb : MonoBehaviour
     private int level;
 
     [SerializeField]
+    [Tooltip("Charge(s) given to player when collected")]
+    [Min(1)]
+    private int charge;
+
+    [SerializeField]
     [Tooltip("Color when orb has been collected")]
     private Color targetColor;
 
@@ -48,6 +53,7 @@ public class Orb : MonoBehaviour
     {
         initialTimeToCollect = 0f;
         level = 1;
+        charge = 1;
     }
 
     private void Update()
@@ -131,7 +137,8 @@ public class Orb : MonoBehaviour
     private void OnCollected(Collider2D collision)
     {
         PlayerManager player = collision.GetComponent<PlayerManager>();
-        Debug.Log(player.IncreaseLevel(level));
+        Debug.Log($"Current Level: {player.IncreaseLevel(level)}");
+        Debug.Log($"Current Charge: {player.IncreaseCharges(charge)}");
 
         isDying = true;
         foreach (BoxCollider2D collider in GetComponents<BoxCollider2D>())
