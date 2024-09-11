@@ -8,9 +8,9 @@ public class Orb : MonoBehaviour
     private float initialTimeToCollect;
 
     [SerializeField]
-    [Tooltip("Level(s) given to player when collected")]
+    [Tooltip("Exp given to player when collected")]
     [Min(1)]
-    private int level;
+    private int exp;
 
     [SerializeField]
     [Tooltip("Charge(s) given to player when collected")]
@@ -52,7 +52,7 @@ public class Orb : MonoBehaviour
     private void Reset()
     {
         initialTimeToCollect = 0f;
-        level = 1;
+        exp = 1;
         charge = 1;
     }
 
@@ -137,7 +137,7 @@ public class Orb : MonoBehaviour
     private void OnCollected(Collider2D collision)
     {
         PlayerManager player = collision.GetComponent<PlayerManager>();
-        Debug.Log($"Current Level: {player.IncreaseLevel(level)}");
+        Debug.Log($"Current Level: {player.IncreaseLevel(exp)}");
         Debug.Log($"Current Charge: {player.IncreaseCharges(charge)}");
 
         isDying = true;
