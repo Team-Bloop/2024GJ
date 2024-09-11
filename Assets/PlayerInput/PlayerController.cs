@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private Rigidbody2D rb;
@@ -13,10 +13,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject pauseMenu;
 
+    private PlayerManager playerManager;
+    private PlayerAbilityManager playerAbility;
+
     private void Awake()
     {
         input = new PlayerInputActions();
-        moveSpeed = GetComponent<PlayerManager>().MovementSpeed;
+        playerManager = GetComponent<PlayerManager>();
+        moveSpeed = playerManager.MovementSpeed;
+        playerAbility = GetComponent<PlayerAbilityManager>();
     }
 
     private void OnEnable()
@@ -53,7 +58,10 @@ public class Player : MonoBehaviour
 
     private void OnAttack(InputAction.CallbackContext context)
     {
-        Debug.Log("Attack");
+        if (playerManager.Charges > 0 && playerAbility.DestroyStorm())
+        {
+            playerManager.IncreaseCharges(-1);
+        }
     }
 
     private void OnPause(InputAction.CallbackContext context)
