@@ -29,7 +29,11 @@ public class PlayerManager : MonoBehaviour
     private int maxExpPerLevel = 20;
 
     [SerializeField]
-    private GameObject EXPUI;
+    private GameObject HP_UI;
+    [SerializeField]
+    private GameObject EXP_UI;
+    [SerializeField]
+    private GameObject AP_Sprite;
 
     void Start()
     {
@@ -110,8 +114,14 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.LogWarning("Damage() arg is 0 which does nothing.");
         }
-        
+
         currentHealth -= amt;
+        // the line below will damage the player
+        // the float is the percetange of total hp lost by the player
+        // HP_UI.GetComponent<HPUI>().changeHPBarPosition(0.1f);
+        // the line below will recover health for the player
+        // the float is the percentage of total hp recovered by the player
+        // HP_UI.GetComponent<HPUI>().changeHPBarPosition(-0.1f);
         if (currentHealth <= 0f)
         {
             Die();
@@ -137,7 +147,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         exp += amt;
-        EXPUI.GetComponent<EXPUI>().updateEXPUI(GetEXPPercentage(), getCurrentLevel());
+        EXP_UI.GetComponent<EXPUI>().updateEXPUI(GetEXPPercentage(), getCurrentLevel());
         //Debug.Log($"CURRENT EXP: {exp}");
         return exp;
     }
@@ -169,6 +179,7 @@ public class PlayerManager : MonoBehaviour
             charges = maxCharges; 
         }
 
+        AP_Sprite.GetComponent<AP_UI>().updateSprite(charges);
         return charges;
     }
 
