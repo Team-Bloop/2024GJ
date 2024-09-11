@@ -5,15 +5,15 @@ using GeneralUtility;
 public class PlayerManager : MonoBehaviour
 {
     private const float MIN_MAX_HEALTH = 1f;
-    private const int MAX_CHARGES = 8;
+    private const int MIN_MAX_CHARGES = 8;
 
     [SerializeField]
     [Min(MIN_MAX_HEALTH)]
     private float maxHealth;
 
     [SerializeField]
-    [Min(MAX_CHARGES)]
-    private float maxCharges;
+    [Min(MIN_MAX_CHARGES)]
+    private int maxCharges;
 
     [SerializeField]
     [Min(0f)]
@@ -34,7 +34,8 @@ public class PlayerManager : MonoBehaviour
     private void Reset()
     {
         maxHealth = MIN_MAX_HEALTH;
-        maxCharges = MAX_CHARGES;
+        maxCharges = MIN_MAX_CHARGES;
+        movementSpeed = 10;
     }
 
     public float MaxHealth
@@ -142,9 +143,9 @@ public class PlayerManager : MonoBehaviour
 
         charges += amt;
 
-        if (charges > MAX_CHARGES)
+        if (charges > maxCharges)
         {
-            charges = MAX_CHARGES; 
+            charges = maxCharges; 
         }
 
         return charges;

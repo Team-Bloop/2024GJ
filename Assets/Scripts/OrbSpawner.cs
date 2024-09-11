@@ -120,8 +120,7 @@ public class OrbSpawner : MonoBehaviour
             float x = UnityEngine.Random.Range(xUpperBound, xLowerBound);
             float y = UnityEngine.Random.Range(yUpperBound, yLowerBound);
 
-            Orb orb = Instantiate(orbPrefab, new Vector2(x, y), Quaternion.identity);
-            orb.SpawnLocationIdx = num;
+            Instantiate(orbPrefab, new Vector2(x, y), Quaternion.identity);
             orbCount++;
         }
     }

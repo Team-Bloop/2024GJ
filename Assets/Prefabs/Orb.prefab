@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialTimeToCollect: 2
-  level: 2
+  level: 1
   charge: 1
   targetColor: {r: 1, g: 1, b: 1, a: 0}
+  deathAnimTime: 0.5
