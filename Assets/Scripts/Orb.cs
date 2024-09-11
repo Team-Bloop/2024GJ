@@ -72,12 +72,23 @@ public class Orb : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.tag != "Player")
+        {
+            return;
+        }
+
         PlayerManager player = collision.GetComponent<PlayerManager>();
         timeToCollect = (1 - player.CollectSpeed) * initialTimeToCollect;
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if(collision.tag != "Player")
+        {
+            return;
+        }
+
         currentTime += Time.deltaTime;
 
         if (timeToCollect == 0)
