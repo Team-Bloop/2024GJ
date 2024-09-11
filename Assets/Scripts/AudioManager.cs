@@ -17,14 +17,14 @@ public class AudioManager : MonoBehaviour
     private AudioSource audioSource;
 
     [SerializeField]
-    private SoundList[] soundList;
-
-    [SerializeField]
     private Slider m_Volume;
     [SerializeField]
     private Slider bgm_Volume;
     [SerializeField]
     private Slider sfx_Volume;
+
+    [SerializeField]
+    private SoundList[] soundList;
 
     private float masterVolume;
     private float bgmVolume;
@@ -67,13 +67,13 @@ public class AudioManager : MonoBehaviour
         Debug.Log(instance.masterVolume);
     }
 
-    public void bgmVolumeChange(float volume)
+    public void bgmVolumeChange()
     {
         instance.bgmVolume = bgm_Volume.value;
         Debug.Log(instance.bgmVolume);
     }
 
-    public void sfxVolumeChange(float volume) {
+    public void sfxVolumeChange() {
         instance.sfxVolume = sfx_Volume.value;
         Debug.Log(instance.sfxVolume);
     }
