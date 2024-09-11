@@ -6,10 +6,7 @@ public class OrbSpawner : MonoBehaviour
 {
     [Header("Boundaries")]
     [SerializeField]
-    private Vector2 topLeft;
-
-    [SerializeField]
-    private Vector2 botRight;
+    private Transform[] locations;
 
     [Header("Spawner")]
     [SerializeField]
@@ -39,6 +36,23 @@ public class OrbSpawner : MonoBehaviour
     {
         orbCount = GetComponentsInChildren<Orb>().Length;  
         currentTime = 0f;
+
+        if (locations.Length == 0)
+        {
+            Utility.Quit();
+            throw new ArgumentException("No values provided for Locations");
+        }
+
+        foreach (Transform t in locations)
+        {
+            if (t == null)
+            {
+                Utility.Quit();
+                throw new ArgumentException("An element in Locations is null");
+            }
+
+            t.GetComponent<SpriteRenderer>().sortingOrder = -2;
+        }
 
         if (orbCount + initialOrbSpawn > maxOrbSpawn)
         {
@@ -93,8 +107,18 @@ public class OrbSpawner : MonoBehaviour
 
         for (int i = 0; i < amt; i++)
         {
-            float x = UnityEngine.Random.Range(topLeft.x, botRight.x);
-            float y = UnityEngine.Random.Range(topLeft.y, botRight.y);
+            int num = UnityEngine.Random.Range(0, locations.Length);
+            float xFactor = locations[num].localScale.x / 2;
+            float yFactor = locations[num].localScale.y / 2;
+
+            float xUpperBound = locations[num].position.x + xFactor;
+            float xLowerBound = locations[num].position.x - xFactor;
+
+            float yUpperBound = locations[num].position.y + yFactor;
+            float yLowerBound = locations[num].position.y - yFactor;
+
+            float x = UnityEngine.Random.Range(xUpperBound, xLowerBound);
+            float y = UnityEngine.Random.Range(yUpperBound, yLowerBound);
 
             Instantiate(orbPrefab, new Vector2(x, y), Quaternion.identity);
             orbCount++;
