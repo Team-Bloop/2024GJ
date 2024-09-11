@@ -8,9 +8,14 @@ public class Orb : MonoBehaviour
     private float initialTimeToCollect;
 
     [SerializeField]
-    [Tooltip("Level(s) given to player when collected")]
+    [Tooltip("Exp given to player when collected")]
     [Min(1)]
-    private int level;
+    private int exp;
+
+    [SerializeField]
+    [Tooltip("Charge(s) given to player when collected")]
+    [Min(1)]
+    private int charge;
 
     [SerializeField]
     [Tooltip("Color when orb has been collected")]
@@ -26,9 +31,9 @@ public class Orb : MonoBehaviour
     private OrbSpawner orbSpawner;
 
     // temp inefficient way until we get sprite anims down
-    private bool isDying; 
-    private Transform transform;
+    private bool isDying;
     private float deathAnimTime;
+    private new Transform transform;
 
     private void Start()
     {
@@ -39,15 +44,16 @@ public class Orb : MonoBehaviour
         initialColor = spriteRenderer.color;
         orbSpawner = GameObject.FindGameObjectWithTag("OrbSpawner").GetComponent<OrbSpawner>();
 
-        isDying = false; 
-        transform = GetComponent<Transform>();
+        isDying = false;
         deathAnimTime = 0.5f;
+        transform = GetComponent<Transform>();
     }
 
     private void Reset()
     {
         initialTimeToCollect = 0f;
-        level = 1;
+        exp = 1;
+        charge = 1;
     }
 
     private void Update()
@@ -131,7 +137,8 @@ public class Orb : MonoBehaviour
     private void OnCollected(Collider2D collision)
     {
         PlayerManager player = collision.GetComponent<PlayerManager>();
-        Debug.Log(player.IncreaseLevel(level));
+        Debug.Log($"Current Level: {player.IncreaseLevel(exp)}");
+        Debug.Log($"Current Charge: {player.IncreaseCharges(charge)}");
 
         isDying = true;
         foreach (BoxCollider2D collider in GetComponents<BoxCollider2D>())

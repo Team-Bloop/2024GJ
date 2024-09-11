@@ -1,13 +1,11 @@
 using System;
 using UnityEngine;
 using GeneralUtility;
+using System.Collections.Generic;
+using UnityEngine.Rendering;
 
 public class OrbSpawner : MonoBehaviour
 {
-    [Header("Boundaries")]
-    [SerializeField]
-    private Transform[] locations;
-
     [Header("Spawner")]
     [SerializeField]
     private Orb orbPrefab;
@@ -29,29 +27,31 @@ public class OrbSpawner : MonoBehaviour
     [Min(1)]
     private int orbsPerSpawn;
 
+    [SerializeField]
+    private bool showLocationSquares;
+
     private int orbCount;
     private float currentTime;
+    private List<Transform> locations;
 
     private void Start()
     {
-        orbCount = GetComponentsInChildren<Orb>().Length;  
+        orbCount = GetComponentsInChildren<Orb>().Length;
         currentTime = 0f;
+        locations = new List<Transform>();
 
-        if (locations.Length == 0)
+        Transform locationsTransform = transform.Find("Locations");
+        locationsTransform.GetComponent<SortingGroup>().sortingOrder = showLocationSquares ? 0 : -2;
+
+        foreach (Transform t in locationsTransform)
         {
-            Utility.Quit();
-            throw new ArgumentException("No values provided for Locations");
+            locations.Add(t);
         }
 
-        foreach (Transform t in locations)
+        if (locations.Count == 0)
         {
-            if (t == null)
-            {
-                Utility.Quit();
-                throw new ArgumentException("An element in Locations is null");
-            }
-
-            t.GetComponent<SpriteRenderer>().sortingOrder = -2;
+            Utility.Quit();
+            throw new ArgumentException("OrbSpawner -> Locations has no children (needs 2D square sprites).");
         }
 
         if (orbCount + initialOrbSpawn > maxOrbSpawn)
@@ -107,7 +107,7 @@ public class OrbSpawner : MonoBehaviour
 
         for (int i = 0; i < amt; i++)
         {
-            int num = UnityEngine.Random.Range(0, locations.Length);
+            int num = UnityEngine.Random.Range(0, locations.Count);
             float xFactor = locations[num].localScale.x / 2;
             float yFactor = locations[num].localScale.y / 2;
 
