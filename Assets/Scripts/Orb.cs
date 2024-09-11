@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using GeneralUtility;
 
 public class Orb : MonoBehaviour
 {
@@ -25,6 +23,7 @@ public class Orb : MonoBehaviour
     private Color initialColor;
     private Color tempColor;
     private float completionAmt;
+    private OrbSpawner orbSpawner;
 
     // temp inefficient way until we get sprite anims down
     private bool isDying; 
@@ -38,6 +37,7 @@ public class Orb : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         tempColor = spriteRenderer.color;
         initialColor = spriteRenderer.color;
+        orbSpawner = GameObject.FindGameObjectWithTag("OrbSpawner").GetComponent<OrbSpawner>();
 
         isDying = false; 
         transform = GetComponent<Transform>();
@@ -65,6 +65,7 @@ public class Orb : MonoBehaviour
             if (deathAnimTime < 0)
             {
                 Destroy(gameObject);
+                orbSpawner.DecreaseOrbs();
             }
         }
     }
