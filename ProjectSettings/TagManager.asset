@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - OrbSpawner
+  - Storm
   layers:
   - Default
   - TransparentFX

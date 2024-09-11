@@ -15,6 +15,8 @@ public class MiniStorm : MonoBehaviour
     [SerializeField]
     private bool Pulsing = true;
 
+    public SpriteRenderer SelectedIndicator;
+
     bool shrinking = true;
     Vector3 currentScale;
     Vector3 shrinkScale;
@@ -49,6 +51,10 @@ public class MiniStorm : MonoBehaviour
             Pulse();
         else
             transform.localScale = currentScale;
+        if (transform.localScale.x < 0.2f)
+        {
+            Collapse();
+        }
     }
 
     /// <summary>
@@ -98,7 +104,6 @@ public class MiniStorm : MonoBehaviour
             shrinking = true;
             
         }
-        Debug.Log(shrinking);
     }
 
     /// <summary>
@@ -112,9 +117,11 @@ public class MiniStorm : MonoBehaviour
 
     public void Collapse()
     {
-        if (transform.localScale.x < 0.2f)
-        {
-            Destroy(this);
-        }
+        Destroy(this);
+    }
+
+    public void Indicate(bool indicate)
+    {
+        SelectedIndicator.enabled = indicate;
     }
 }
