@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using GeneralUtility;
+using UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -16,13 +17,18 @@ public class PlayerManager : MonoBehaviour
 
     private float currentHealth;
     private float collectSpeed; // 0 - 1, ie: 0.9 -> 90% faster
-    private int level;
+    private int exp;
+    private int level; // at the moment each level will only require 20 exp
+    private int maxExpPerLevel = 20;
+
+    [SerializeField]
+    private GameObject EXPUI;
 
     void Start()
     {
         currentHealth = maxHealth;
         collectSpeed = 0f;
-        level = 0;
+        exp = 0;
     }
 
     private void Reset()
@@ -80,7 +86,7 @@ public class PlayerManager : MonoBehaviour
 
     public int Level
     {
-        get { return level; }
+        get { return exp; }
     }
 
     // Use negative amt to "heal"
@@ -108,7 +114,7 @@ public class PlayerManager : MonoBehaviour
         return currentHealth / maxHealth;   
     }
 
-    public int IncreaseLevel(int amt)
+    public int IncreaseEXP(int amt)
     {
         if (amt < 0)
         {
@@ -116,7 +122,21 @@ public class PlayerManager : MonoBehaviour
             throw new ArgumentException("IncreaseLevel() arg cannot be less than 0");
         }
 
-        level += amt;
+        exp += amt;
+        EXPUI.GetComponent<EXPUI>().updateEXPUI(GetEXPPercentage(), getCurrentLevel());
+        //Debug.Log($"CURRENT EXP: {exp}");
+        return exp;
+    }
+
+    public float GetEXPPercentage() {
+        float currentlvlExp = exp % maxExpPerLevel;
+        //Debug.Log($"LEVEL EXP: " + currentlvlExp);
+        return currentlvlExp / maxExpPerLevel;
+    }
+
+    public int getCurrentLevel() {
+        level = exp / maxExpPerLevel + 1;
+        //Debug.Log($"CURRENT LEVEL: {level}");
         return level;
     }
 
