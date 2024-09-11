@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class StormBorderManager : MonoBehaviour
 {
-    PlayerManager  playerManager;
+    PlayerManager playerManager;
+
     [SerializeField]
     float ShrinkRate = 0.01f;
+    [SerializeField]
+    float BorderDamageValue = 1;
+    [SerializeField]
+    float BorderDamageRate = 2f;
+
+    bool playerDetected = true;
+    bool borderDamageActive = false;
 
     private void Start()
     {
@@ -15,21 +23,31 @@ public class StormBorderManager : MonoBehaviour
     private void Update()
     {
         Shrink();
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        
+        if (!playerDetected && !borderDamageActive)
+        {
+            StartCoroutine(OutOfBorderDamage());
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        
+        playerDetected = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        playerDetected = true;
+    }
+
+    IEnumerator OutOfBorderDamage()
+    {
+        borderDamageActive = true;
+        yield return new WaitForSeconds(BorderDamageRate);
+        if (!playerDetected)
+        {
+            playerManager.Damage(BorderDamageValue);
+        }
+        borderDamageActive = false;
     }
 
     /// <summary>

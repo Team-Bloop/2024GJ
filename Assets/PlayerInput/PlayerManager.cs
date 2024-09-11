@@ -96,6 +96,10 @@ public class PlayerManager : MonoBehaviour
         {
             Die();
         }
+        else if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
         return currentHealth;
     }
 
