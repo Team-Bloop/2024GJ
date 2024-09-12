@@ -1087,7 +1087,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7139142694425377361, guid: 5e7ea02950fa4ad4f883794754700a9d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.43
+      value: 2.55
       objectReference: {fileID: 0}
     - target: {fileID: 7311527952277303733, guid: 5e7ea02950fa4ad4f883794754700a9d, type: 3}
       propertyPath: m_TagString
@@ -1196,7 +1196,7 @@ GameObject:
   - component: {fileID: 660373531}
   m_Layer: 0
   m_Name: Top
-  m_TagString: Untagged
+  m_TagString: CollisionTiles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1878,7 +1878,7 @@ GameObject:
   - component: {fileID: 760480400}
   m_Layer: 0
   m_Name: WorldBorder
-  m_TagString: Untagged
+  m_TagString: CollisionTiles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

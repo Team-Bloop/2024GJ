@@ -131,7 +131,7 @@ public class OrbSpawner : MonoBehaviour
             
             foreach (Collider2D item in results)
             {
-                if (item != null && (item.tag == "Orb" || item.tag == "Player" || item.tag == "Storm"))
+                if (item != null && (item.tag == "Orb" || item.tag == "Player" || item.tag == "Storm" || item.tag == "CollisionTiles"))
                 {
                     canSpawn = false;
                     break;
