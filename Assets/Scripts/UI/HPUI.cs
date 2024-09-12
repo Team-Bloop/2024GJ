@@ -18,12 +18,12 @@ public class HPUI : MonoBehaviour
     }
 
     public void changeHPBarPosition(float percentage) {
-        // percentage is percentage of HPLeft
+        // percentage is percentage of hp change
         float hpValue = percentage * hpRectTransform.rect.width;
         Vector3 checkVector = hpRectTransform.localPosition + Vector3.left * hpValue;
         if (hpRectTransform.localPosition.x > originalPositionX - hpRectTransform.rect.width
             && checkVector.x < originalPositionX) {
-            Debug.Log($"CURRENT EXP AT: {percentage * 100}%");
+            Debug.Log($"HP LOST (NEGATIVE FOR RECOVERED): {percentage * 100}%");
             hpValue = percentage * hpRectTransform.rect.width;
             hpRectTransform.localPosition = checkVector;
         }
