@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class MiniStormSpawner : MonoBehaviour
 {
-    [SerializeField] Transform BorderStormTransform;
-    [SerializeField] GameObject StormPrefab;
+    [SerializeField] Transform borderStormTransform;
+    [SerializeField] Transform borderStormMaskTransform;
+    [SerializeField] GameObject stormPrefab;
+    [SerializeField] List<Sprite> StormSpritesList = new List<Sprite>();
+
+    [SerializeField] GameObject player;
     [SerializeField] bool TriggerStorms = false;
+
+    Transform playerTransform;
+
+    private void Start()
+    {
+        playerTransform = player.transform;
+    }
 
     private void Update()
     {
@@ -16,6 +27,10 @@ public class MiniStormSpawner : MonoBehaviour
 
     public void StartStorms()
     {
+        if (borderStormTransform.localScale.x <= 0.01f)
+        {
+            return;
+        }
         StartCoroutine(GenerateStorm());
         TriggerStorms = false;
     }
@@ -24,21 +39,41 @@ public class MiniStormSpawner : MonoBehaviour
     {
         while(true)
         {
+            if (borderStormTransform.localScale.x <= 0.01f)
+            {
+                yield return null;
+            }
             Vector3 location = GenerateLocation();
-            Instantiate(StormPrefab, location, Quaternion.identity);
+            GameObject newObject = Instantiate(stormPrefab, location, Quaternion.identity);
+            newObject.GetComponent<MiniStorm>().Player = player;
+            SpriteRenderer newObjectSprite = newObject.GetComponent<SpriteRenderer>();
+
+            int x = Random.Range(0, 2);
+            int randomSprite = Random.Range(0, StormSpritesList.Count);
+
+            newObjectSprite.flipX = x == 0 ? false : true;
+            newObjectSprite.sprite = StormSpritesList[randomSprite];
+
             yield return new WaitForSeconds(5);
         }
     }
 
     Vector3 GenerateLocation()
     {
-        float xRange = (BorderStormTransform.localScale.x / 2) - 0.5f;
-        float yRange = (BorderStormTransform.localScale.y / 2) - 0.5f;
-        float zRange = (BorderStormTransform.localScale.z / 2) - 0.5f;
+        float xRange = (borderStormTransform.localScale.x / 2 * borderStormMaskTransform.localScale.x) - 0.5f;
+        float yRange = (borderStormTransform.localScale.y / 2 * borderStormMaskTransform.localScale.y) - 0.5f;
+        float zRange = (borderStormTransform.localScale.z / 2 * borderStormMaskTransform.localScale.z) - 0.5f;
 
-        xRange = Random.Range(-xRange, xRange);
-        yRange = Random.Range(-yRange, yRange);
-        zRange = Random.Range(-zRange, zRange);
+        while (true)
+        {
+            xRange = Random.Range(-xRange, xRange);
+            yRange = Random.Range(-yRange, yRange);
+            zRange = Random.Range(-zRange, zRange);
+
+            if (Mathf.Abs(playerTransform.position.x - xRange) < 1 && Mathf.Abs(playerTransform.position.y - yRange) < 1 && Mathf.Abs(playerTransform.position.z - zRange) < 1)
+                continue;
+            break;
+        }
 
         return new Vector3(xRange, yRange, zRange);
     }
