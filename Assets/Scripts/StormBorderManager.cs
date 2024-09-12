@@ -56,7 +56,7 @@ public class StormBorderManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Shrinks the border bit by bit and activates warning flash when at at scale 0.2
     /// </summary>
     public void Shrink()
     {
