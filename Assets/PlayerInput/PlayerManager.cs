@@ -111,6 +111,8 @@ public class PlayerManager : MonoBehaviour
         }
 
         currentHealth -= amt;
+        float percentageDamage = amt / currentHealth;
+        HP_UI.GetComponent<HPUI>().changeHPBarPosition(percentageDamage);
         // the line below will damage the player
         // the float is the percetange of total hp lost by the player
         // HP_UI.GetComponent<HPUI>().changeHPBarPosition(0.1f);
