@@ -71,13 +71,9 @@ public class PlayerController : MonoBehaviour
 
     public void pauseToggle() {
         if (pauseMenu.activeSelf == false) {
-            // Debug.Log("Pause");
-            // pause
             pauseMenu.SetActive(true);
             Time.timeScale = 0;
         } else {
-            // Debug.Log("Play");
-            // play
             pauseMenu.SetActive(false);
             Time.timeScale = 1;
         }
