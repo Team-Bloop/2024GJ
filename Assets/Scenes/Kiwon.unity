@@ -7199,7 +7199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d632c9ed6117d24997194a7c5cede99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  maxHealth: 100
   maxCharges: 8
   movementSpeed: 10
   EXPUI: {fileID: 900036912}
