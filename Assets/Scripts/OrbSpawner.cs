@@ -1,12 +1,13 @@
 using System;
-using UnityEngine;
-using GeneralUtility;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Rendering;
+using GeneralUtility;
 
 public class OrbSpawner : MonoBehaviour
 {
-    [Header("Spawner")]
+    const int MAX_SPAWN_ATTEMPTS = 10;
+
     [SerializeField]
     private Orb orbPrefab;
 
@@ -99,6 +100,9 @@ public class OrbSpawner : MonoBehaviour
 
     private void Spawn(int amt)
     {
+        int spawnAttempts = 0;
+        List<Collider2D> results = new List<Collider2D>();
+
         if (amt < 1)
         {
             Utility.Quit();
@@ -120,8 +124,34 @@ public class OrbSpawner : MonoBehaviour
             float x = UnityEngine.Random.Range(xUpperBound, xLowerBound);
             float y = UnityEngine.Random.Range(yUpperBound, yLowerBound);
 
-            Instantiate(orbPrefab, new Vector2(x, y), Quaternion.identity);
-            orbCount++;
+            Vector2 location = new Vector2(x, y);
+            bool canSpawn = true;
+
+            Physics2D.OverlapBox(location, Vector2.one, 0f, new ContactFilter2D().NoFilter(), results);
+            
+            foreach (Collider2D item in results)
+            {
+                if (item != null && (item.tag == "Orb" || item.tag == "Player" || item.tag == "Storm"))
+                {
+                    canSpawn = false;
+                    break;
+                }
+            }
+
+            if (canSpawn)
+            {
+                Instantiate(orbPrefab, location, Quaternion.identity);
+                orbCount++;
+            } else
+            {
+                i--;
+
+                if (++spawnAttempts >= MAX_SPAWN_ATTEMPTS)
+                {
+                    Debug.LogWarning($"Max spawn attempts ({MAX_SPAWN_ATTEMPTS}) reached, exiting Spawn() loop");
+                    break;
+                }
+            }
         }
     }
 }
