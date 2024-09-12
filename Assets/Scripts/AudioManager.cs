@@ -3,7 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 public enum SoundType {
-    BGM,
+    PEACEFUL_BGM,
+    END_OF_ALL_BGM,
+    GAME_OVER_BGM,
     UI_BUTTON_INTERACT,
     COLLECT,
     PLAYER_HURT,
@@ -14,7 +16,12 @@ public enum SoundType {
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
-    private AudioSource audioSource;
+
+    [SerializeField]
+    private GameObject bgmAudioObject;
+
+    private AudioSource sfxAudioSource;
+    private AudioSource bgmAudioSource;
 
     [SerializeField]
     private Slider m_Volume;
@@ -26,56 +33,76 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private SoundList[] soundList;
 
-    private float masterVolume;
-    private float bgmVolume;
-    private float sfxVolume;
+    private float masterVolume = 0.5f;
+    private float bgmVolume = 0.5f;
+    private float sfxVolume = 0.5f;
 
     void Awake()
     {
         if (instance == null) {
             instance = this;
         }
+        volumeSet();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        sfxAudioSource = GetComponent<AudioSource>();
+        bgmAudioSource = bgmAudioObject.GetComponent<AudioSource>();
+        AudioManager.PlayBGM();
     }
 
-    // For SFX on a trigger
-    public static void PlayRandomSound(SoundType sound, float volume = 1) {
-        AudioClip[] clips = instance.soundList[(int)sound].Sounds;
-        AudioClip randomClip = clips[UnityEngine.Random.Range(0, clips.Length)];
-        instance.audioSource.PlayOneShot(randomClip, volume);
+    public void volumeSet() {
+        masterVolume = m_Volume.value;
+        bgmVolume = bgm_Volume.value;
+        sfxVolume = sfx_Volume.value;
+    }
+
+    // If we want multiple types of sounds
+    //public static void PlayRandomSound(SoundType sound, float volume = 1) {
+    //    AudioClip[] clips = instance.soundList[(int)sound].Sounds;
+    //    AudioClip randomClip = clips[UnityEngine.Random.Range(0, clips.Length)];
+    //    instance.audioSource.PlayOneShot(randomClip, volume);
+    //}
+
+    public static void PlayBGM() 
+    {
+        AudioClip[] clips = instance.soundList[(int)SoundType.PEACEFUL_BGM].Sounds;
+        instance.bgmAudioSource.loop = true;
+        instance.bgmAudioSource.clip = clips[0];
+        instance.bgmAudioSource.volume = instance.masterVolume * instance.bgmVolume;
+        instance.bgmAudioSource.Play(0);
     }
 
     // For SFX on a trigger
     public static void PlaySound(SoundType sound, float volume = 1) {
         AudioClip[] clips = instance.soundList[(int)sound].Sounds;
-        instance.audioSource.PlayOneShot(clips[0], volume);
+        instance.sfxAudioSource.PlayOneShot(clips[0], volume);
     }
     // For SFX on a trigger
-    public static void PlayCollectSound(SoundType sound, float volume = 1) 
-    {
-        AudioClip[] clips = instance.soundList[(int)sound].Sounds;
-
-    }
+    //public static void PlayCollectSound(SoundType sound, float volume = 1) 
+    //{
+    //    AudioClip[] clips = instance.soundList[(int)sound].Sounds;
+    //}
 
     public void masterVolumeChange() {
         instance.masterVolume = m_Volume.value;
-        Debug.Log(instance.masterVolume);
+        instance.bgmAudioSource.volume = instance.masterVolume * instance.bgmVolume;
+        instance.sfxAudioSource.volume = instance.masterVolume * instance.sfxVolume;
+        //Debug.Log(instance.masterVolume);
     }
 
     public void bgmVolumeChange()
     {
         instance.bgmVolume = bgm_Volume.value;
-        Debug.Log(instance.bgmVolume);
+        //Debug.Log(instance.bgmVolume);
+        instance.bgmAudioSource.volume = instance.masterVolume * instance.bgmVolume;
     }
 
     public void sfxVolumeChange() {
         instance.sfxVolume = sfx_Volume.value;
-        Debug.Log(instance.sfxVolume);
+        //Debug.Log(instance.sfxVolume);
     }
 
 #if UNITY_EDITOR
