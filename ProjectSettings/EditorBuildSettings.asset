@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Old_UI_Merged.unity
     guid: 4024e5edcaf097c4d9d44d7fbc077a16
   - enabled: 1
-    path: Assets/Scenes/AUDIO_UI.unity
+    path: Assets/Scenes/MASTER_SCENE.unity
     guid: 6d34f481f9ca26b40ad79646917324b7
   m_configObjects: {}
