@@ -7,11 +7,14 @@ public class StormBorderManager : MonoBehaviour
     PlayerManager playerManager;
 
     [SerializeField]
-    float ShrinkRate = 0.01f;
+    StormWarning stormWarning;
+
     [SerializeField]
-    float BorderDamageValue = 1;
+    float shrinkRate = 0.01f;
     [SerializeField]
-    float BorderDamageRate = 2f;
+    float borderDamageValue = 1;
+    [SerializeField]
+    float borderDamageRate = 2f;
 
     bool playerDetected = true;
     bool borderDamageActive = false;
@@ -31,30 +34,37 @@ public class StormBorderManager : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        playerDetected = false;
+        if (collision.gameObject.tag == "Player")
+            playerDetected = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        playerDetected = true;
+        if (collision.gameObject.tag == "Player")
+            playerDetected = true;
     }
 
     IEnumerator OutOfBorderDamage()
     {
         borderDamageActive = true;
-        yield return new WaitForSeconds(BorderDamageRate);
+        yield return new WaitForSeconds(borderDamageRate);
         if (!playerDetected)
         {
-            playerManager.Damage(BorderDamageValue);
+            playerManager.Damage(borderDamageValue);
         }
         borderDamageActive = false;
     }
 
     /// <summary>
-    /// 
+    /// Shrinks the border bit by bit and activates warning flash when at at scale 0.2
     /// </summary>
     public void Shrink()
     {
-        transform.localScale -= transform.localScale * ShrinkRate * Time.deltaTime;
+        if (transform.localScale.x > 0.001f)
+            transform.localScale -= transform.localScale * shrinkRate * Time.deltaTime;
+        if (transform.localScale.x < 0.2)
+            stormWarning.FlashSwitch(true);
+        else
+            stormWarning.FlashSwitch(false);
     }
 }

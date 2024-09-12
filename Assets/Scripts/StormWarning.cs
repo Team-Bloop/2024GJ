@@ -27,6 +27,8 @@ public class StormWarning : MonoBehaviour
 
     public void FlashSwitch(bool trigger)
     {
+        if (Flashing == trigger)
+            return;
         Flashing = trigger;
         screenColor.a = 0;
         ScreenImage.color = screenColor;
@@ -45,6 +47,5 @@ public class StormWarning : MonoBehaviour
             flashOn = false;
 
         ScreenImage.color = screenColor;
-        Debug.Log(screenColor.a);
     }
 }
