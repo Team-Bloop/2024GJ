@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Orb : OrbBase
+public class BasicOrb : OrbBase
 {
     [SerializeField]
     [Tooltip("Exp given to player when collected")]
@@ -12,7 +12,7 @@ public class Orb : OrbBase
     [Min(1)]
     private int charge;
 
-    protected Orb() : base(false) { }
+    protected BasicOrb() : base(false) { }
 
     private void Reset()
     {

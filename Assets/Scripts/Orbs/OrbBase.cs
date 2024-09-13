@@ -11,14 +11,14 @@ public class OrbBase : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Color when orb has been collected")]
-    private Color targetColor;
+    protected Color targetColor;
 
-    private float currentTime;
+    protected float currentTime;
     private float timeToCollect;
 
-    private SpriteRenderer spriteRenderer;
-    private Color initialColor;
-    private Color tempColor;
+    protected SpriteRenderer spriteRenderer;
+    protected Color initialColor;
+    protected Color tempColor;
     private float completionAmt;
     private OrbSpawner orbSpawner;
 
@@ -33,7 +33,7 @@ public class OrbBase : MonoBehaviour
         this.hasOrbDuration = hasOrbDuration;
     }
 
-    private void Start()
+    protected void Start()
     {
         currentTime = 0f;
         timeToCollect = initialTimeToCollect;
@@ -45,11 +45,6 @@ public class OrbBase : MonoBehaviour
         isDying = false;
         deathAnimTimeCountdown = DEATH_ANIM_TIME;
         transform = GetComponent<Transform>();
-    }
-
-    private void Reset()
-    {
-        initialTimeToCollect = 0f;
     }
 
     protected void Update()
@@ -78,7 +73,7 @@ public class OrbBase : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag != "Player")
         {
@@ -87,10 +82,9 @@ public class OrbBase : MonoBehaviour
 
         PlayerManager player = collision.GetComponent<PlayerManager>();
         timeToCollect = (1 - player.CollectSpeed) * initialTimeToCollect;
-
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    protected virtual void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag != "Player")
         {
@@ -134,6 +128,11 @@ public class OrbBase : MonoBehaviour
     public float CompletionAmt
     {
         get { return completionAmt; }
+    }
+
+    public float InitialTimeToCollect
+    {
+        get { return initialTimeToCollect; }
     }
 
     protected virtual void OnCollected(Collider2D collision)

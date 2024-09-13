@@ -8,7 +8,7 @@ public class GAME_OVER : MonoBehaviour
     // Start is called before the first frame update
     void Start() 
     {
-
+        AudioManager.PlayGameOverBGM();
     }
 
     public void StartGame() 

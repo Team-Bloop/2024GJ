@@ -70,7 +70,7 @@ public class OrbSpawner : MonoBehaviour
 
     private void Start()
     {
-        orbCount = GetComponentsInChildren<Orb>().Length;
+        orbCount = GetComponentsInChildren<OrbBase>().Length;
         currentTime = 0f;
         locations = new List<Transform>();
         totalOrbChance = 0;

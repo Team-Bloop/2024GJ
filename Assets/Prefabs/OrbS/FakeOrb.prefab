@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 739417382934173204}
   - component: {fileID: 4069946714758543625}
   - component: {fileID: 2787100617828932873}
-  - component: {fileID: -8088963625496239872}
+  - component: {fileID: 1675394941725844052}
   m_Layer: 0
-  m_Name: Orb
+  m_Name: FakeOrb
   m_TagString: Orb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 0, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -177,7 +177,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-8088963625496239872
+--- !u!114 &1675394941725844052
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,10 +186,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4790789259207219114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28f4fbe5c38904d4d8d3ef206e6e8b7f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6be8db49156d81f4a80417905eb6f49b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialTimeToCollect: 2
-  exp: 5
-  charge: 1
-  targetColor: {r: 1, g: 1, b: 1, a: 0}
+  initialTimeToCollect: 1
+  targetColor: {r: 1, g: 0, b: 0, a: 1}
+  fakeTargetColor: {r: 1, g: 1, b: 1, a: 1}
+  colorImitations:
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  damage: 10
+  warningTimeRatio: 0.5
