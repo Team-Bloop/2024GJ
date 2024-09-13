@@ -95,14 +95,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orbSpawnData:
   - orbPrefab: {fileID: -8088963625496239872, guid: 3995244c9c166024b85a4a88f03cae31, type: 3}
-    orbChance: 4
+    orbChance: 5
   - orbPrefab: {fileID: 8079909649850559125, guid: 8a8877cb298a7c14399d5495f784e550, type: 3}
     orbChance: 2
   - orbPrefab: {fileID: 8071669109584515768, guid: 3875566e4f679a640bde7fbaf7504ee3, type: 3}
     orbChance: 1
   initialOrbSpawn: 0
-  maxOrbSpawn: 10
-  spawnRate: 1
+  maxOrbSpawn: 12
+  spawnRate: 4
   orbsPerSpawn: 1
   showLocationSquares: 0
 --- !u!1 &7346268629218867562
