@@ -3,11 +3,12 @@ using UnityEngine;
 public class SpeedOrb : OrbBase
 {
     [SerializeField]
-    [Tooltip("")]
+    [Tooltip("Movement Speed multiplier")]
     [Min(1f)]
     private float movementSpeed;
 
     [SerializeField]
+    [Tooltip("Collect Speed percentage between 0 and 1 (ie: 0.9 = 90%; 1 = instant collect)")]
     [Range(0f, 1f)]
     private float collectSpeed;
 
