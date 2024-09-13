@@ -24,7 +24,7 @@ public class StormBorderManager : MonoBehaviour
 
     private void Update()
     {
-        if (playerManager.GetCurrentLevel() > 2)
+        if (playerManager.getCurrentLevel()  > 2)
             Shrink();
 
         if (playerDetected && !borderDamageActive)
