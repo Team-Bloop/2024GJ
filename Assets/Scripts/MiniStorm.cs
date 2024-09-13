@@ -94,7 +94,7 @@ public class MiniStorm : MonoBehaviour
         yield return new WaitForSeconds(stormDamageRate);
         if (!playerDetected)
         {
-            playerManager.Damage(stormDamageValue);
+            Debug.Log(playerManager.Damage(stormDamageValue));
         }
         stormDamageActive = false;
     }

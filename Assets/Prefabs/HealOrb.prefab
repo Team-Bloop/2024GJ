@@ -189,6 +189,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19478ab83c505b244880f1345b313e09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialTimeToCollect: 1
+  initialTimeToCollect: 2
   targetColor: {r: 1, g: 1, b: 1, a: 0}
   heal: 1
