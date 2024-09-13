@@ -10,7 +10,7 @@ public class StormWarning : MonoBehaviour
 
     public bool Flashing = false;
     bool flashOn = false;
-    float flashOpacity = 0.5f;
+    float flashOpacity = 0.4f;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +41,7 @@ public class StormWarning : MonoBehaviour
         else
             screenColor.a = Mathf.Lerp(screenColor.a, 0, Time.deltaTime);
 
-        if (screenColor.a >= flashOpacity-0.05f)
+        if (screenColor.a >= flashOpacity-0.1f)
             flashOn = true;
         else if (screenColor.a <= 0.1f)
             flashOn = false;

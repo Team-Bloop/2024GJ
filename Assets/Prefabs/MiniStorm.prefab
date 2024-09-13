@@ -134,14 +134,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b463a6907e09bb341a92f78d469b7305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StormDamageValue: 1
-  StormDamageRate: 1
+  stormDamageValue: 1
+  stormDamageRate: 1
   sizeLimit: 100
-  ExpandRate: 0.02
-  PulseRange: 0.8
-  PulseRate: 1.5
-  Pulsing: 1
+  expandRate: 0.01
+  pulseRange: 0.8
+  pulseRate: 2
+  pulsing: 1
+  minChaseLevel: 2
+  chaseRate: 0.1
   SelectedIndicator: {fileID: 3551648277271768243}
+  Player: {fileID: 0}
 --- !u!1 &8681311073244390187
 GameObject:
   m_ObjectHideFlags: 0

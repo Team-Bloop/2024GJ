@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StormBorderManager : MonoBehaviour
 {
+    [SerializeField]
     PlayerManager playerManager;
 
     [SerializeField]
@@ -19,38 +20,45 @@ public class StormBorderManager : MonoBehaviour
     bool playerDetected = true;
     bool borderDamageActive = false;
 
-    private void Start()
-    {
-        playerManager = GetComponent<PlayerManager>();
-    }
+    Coroutine damageCoroutine;
+
     private void Update()
     {
-        Shrink();
-        if (!playerDetected && !borderDamageActive)
+        if (playerManager.getCurrentLevel()  > 2)
+            Shrink();
+
+        if (playerDetected && !borderDamageActive)
         {
-            StartCoroutine(OutOfBorderDamage());
+            damageCoroutine = StartCoroutine(OutOfBorderDamage());
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
-            playerDetected = false;
+        {
+            if (damageCoroutine != null)
+                StopCoroutine(damageCoroutine);
+            playerDetected = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
-            playerDetected = true;
+        {
+            playerDetected = false;
+        }
     }
 
     IEnumerator OutOfBorderDamage()
     {
         borderDamageActive = true;
-        yield return new WaitForSeconds(borderDamageRate);
-        if (!playerDetected)
+        while (playerDetected)
         {
+            Debug.Log("Player Damaged by Mini Storm");
             playerManager.Damage(borderDamageValue);
+            yield return new WaitForSeconds(borderDamageRate);
         }
         borderDamageActive = false;
     }
