@@ -120,7 +120,8 @@ public class PlayerManager : MonoBehaviour
         // HP_UI.GetComponent<HPUI>().changeHPBarPosition(0.1f);
         // the line below will recover health for the player
         // the float is the percentage of total hp recovered by the player
-        // HP_UI.GetComponent<HPUI>().changeHPBarPosition(-0.1f);
+        // HP_UI.GetComponent<HPUI>().changeHPBarPosition(-0.1f)
+
         if (currentHealth <= 0f)
         {
             Die();
