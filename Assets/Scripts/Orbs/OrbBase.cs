@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class OrbBase : MonoBehaviour
 {
+    public const float DEATH_ANIM_TIME = 0.5f;
+
     [SerializeField]
     [Tooltip("Time in seconds")]
     [Min(0f)]
@@ -21,9 +23,15 @@ public class OrbBase : MonoBehaviour
     private OrbSpawner orbSpawner;
 
     // temp inefficient way until we get sprite anims down
+    protected bool hasOrbDuration;
     private bool isDying;
-    private float deathAnimTime;
+    private float deathAnimTimeCountdown;
     private new Transform transform;
+
+    protected OrbBase(bool hasOrbDuration)
+    {
+        this.hasOrbDuration = hasOrbDuration;
+    }
 
     private void Start()
     {
@@ -35,7 +43,7 @@ public class OrbBase : MonoBehaviour
         orbSpawner = GetComponentInParent<OrbSpawner>();
 
         isDying = false;
-        deathAnimTime = 0.5f;
+        deathAnimTimeCountdown = DEATH_ANIM_TIME;
         transform = GetComponent<Transform>();
     }
 
@@ -44,21 +52,28 @@ public class OrbBase : MonoBehaviour
         initialTimeToCollect = 0f;
     }
 
-    private void Update()
+    protected void Update()
     {
         if (isDying)
         {
-            deathAnimTime -= Time.deltaTime;
-            float newScale = Mathf.Lerp(2, 0, deathAnimTime);
+            deathAnimTimeCountdown -= Time.deltaTime;
+            float newScale = Mathf.Lerp(2, 0, deathAnimTimeCountdown);
             Vector3 vector3 = new Vector3(newScale, newScale, newScale);
             transform.localScale = vector3;
 
-            tempColor.a = Mathf.Lerp(0, 1, deathAnimTime);
+            tempColor.a = Mathf.Lerp(0, 1, deathAnimTimeCountdown);
             spriteRenderer.color = tempColor;
 
-            if (deathAnimTime < 0)
+            if (deathAnimTimeCountdown <= 0)
             {
                 orbSpawner.DecreaseOrbs();
+                if (hasOrbDuration)
+                {
+                    isDying = false;
+                } else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
     }

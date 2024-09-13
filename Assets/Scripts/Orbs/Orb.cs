@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Orb : OrbBase
@@ -12,6 +13,8 @@ public class Orb : OrbBase
     [Min(1)]
     private int charge;
 
+    protected Orb() : base(false) { }
+
     private void Reset()
     {
         exp = 1;
@@ -24,6 +27,5 @@ public class Orb : OrbBase
         Debug.Log(player.IncreaseEXP(exp));
         Debug.Log($"Current Charge: {player.IncreaseCharges(charge)}");
         base.OnCollected(collision);
-        Destroy(gameObject);
     }
 }

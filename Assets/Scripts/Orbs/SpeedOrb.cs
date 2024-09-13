@@ -17,6 +17,8 @@ public class SpeedOrb : OrbBase
     [Min(0.1f)]
     private float duration;
 
+    protected SpeedOrb() : base(true) { }
+
     private void Reset()
     {
         movementSpeedBuff = 1f;

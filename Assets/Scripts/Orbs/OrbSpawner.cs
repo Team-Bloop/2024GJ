@@ -190,11 +190,9 @@ public class OrbSpawner : MonoBehaviour
                     {
                         Instantiate(data.OrbPrefab, location, Quaternion.identity, transform);
                         orbCount++;
-                        return;
+                        break;
                     }
                 }
-
-                Debug.LogError($"No Orbs spawned from OrbSpawner. RandInt: {orbNum}, Orb array size: {orbSpawnData.Length}.");
             } else
             {
                 i--;
