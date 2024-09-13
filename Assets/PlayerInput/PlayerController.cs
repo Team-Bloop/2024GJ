@@ -10,9 +10,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveVector = Vector2.zero;
     private float moveSpeed = 0f;
 
-    [SerializeField]
-    private GameObject pauseMenu;
-
     private PlayerManager playerManager;
     private PlayerAbilityManager playerAbility;
 
@@ -30,7 +27,6 @@ public class PlayerController : MonoBehaviour
         input.Player.Move.performed += OnMovementPerformed;
         input.Player.Move.canceled += OnMovementCanceled;
         input.Player.Attack.performed += OnAttack;
-        input.Player.Pause.performed += OnPause;
     }
 
     private void OnDisable()
@@ -64,22 +60,4 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnPause(InputAction.CallbackContext context)
-    {
-        pauseToggle();
-    }
-
-    public void pauseToggle() {
-        if (pauseMenu.activeSelf == false) {
-            // Debug.Log("Pause");
-            // pause
-            pauseMenu.SetActive(true);
-            Time.timeScale = 0;
-        } else {
-            // Debug.Log("Play");
-            // play
-            pauseMenu.SetActive(false);
-            Time.timeScale = 1;
-        }
-    }
 }

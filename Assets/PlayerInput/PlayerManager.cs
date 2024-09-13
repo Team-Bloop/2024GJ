@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using GeneralUtility;
 using UI;
 
@@ -188,6 +189,7 @@ public class PlayerManager : MonoBehaviour
     private void Die()
     {
         Debug.Log("PLAYER DED\nShould prob do smth here");
+        SceneManager.LoadScene("GAME_OVER");
     }
 }
 

@@ -39,8 +39,15 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
+        try {
+            DontDestroyOnLoad(this);
+        } catch (InvalidOperationException e) {
+            Debug.Log(e.Message);
+        }
         if (instance == null) {
             instance = this;
+        } else if (instance != this) {
+            Destroy(gameObject);
         }
         volumeSet();
     }
@@ -50,7 +57,8 @@ public class AudioManager : MonoBehaviour
     {
         sfxAudioSource = GetComponent<AudioSource>();
         bgmAudioSource = bgmAudioObject.GetComponent<AudioSource>();
-        AudioManager.PlayBGM();
+        // this is the main bgm
+        AudioManager.PlayMainBGM(0);
     }
 
     public void volumeSet() {
@@ -65,20 +73,20 @@ public class AudioManager : MonoBehaviour
     //    AudioClip randomClip = clips[UnityEngine.Random.Range(0, clips.Length)];
     //    instance.audioSource.PlayOneShot(randomClip, volume);
     //}
-
-    public static void PlayBGM() 
-    {
+    [Tooltip("value is dependent on which bgm to be played in the list of bgms starting from 0")]
+    public static void PlayMainBGM(int value) {
         AudioClip[] clips = instance.soundList[(int)SoundType.PEACEFUL_BGM].Sounds;
         instance.bgmAudioSource.loop = true;
-        instance.bgmAudioSource.clip = clips[0];
+        instance.bgmAudioSource.clip = clips[value];
         instance.bgmAudioSource.volume = instance.masterVolume * instance.bgmVolume;
         instance.bgmAudioSource.Play(0);
     }
 
     // For SFX on a trigger
-    public static void PlaySound(SoundType sound, float volume = 1) {
+    public static void PlaySound(SoundType sound) {
         AudioClip[] clips = instance.soundList[(int)sound].Sounds;
-        instance.sfxAudioSource.PlayOneShot(clips[0], volume);
+        instance.sfxAudioSource.volume = instance.masterVolume * instance.sfxVolume;
+        instance.sfxAudioSource.PlayOneShot(clips[0], instance.sfxAudioSource.volume);
     }
     // For SFX on a trigger
     //public static void PlayCollectSound(SoundType sound, float volume = 1) 
