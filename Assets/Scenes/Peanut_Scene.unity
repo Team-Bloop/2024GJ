@@ -1504,8 +1504,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8079909649850559125, guid: 8a8877cb298a7c14399d5495f784e550, type: 3}
     - target: {fileID: 2160608350140260047, guid: 5e7ea02950fa4ad4f883794754700a9d, type: 3}
+      propertyPath: orbSpawnData.Array.data[1].orbChance
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 2160608350140260047, guid: 5e7ea02950fa4ad4f883794754700a9d, type: 3}
       propertyPath: orbSpawnData.Array.data[2].orbChance
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2160608350140260047, guid: 5e7ea02950fa4ad4f883794754700a9d, type: 3}
       propertyPath: orbSpawnData.Array.data[2].orbPrefab
