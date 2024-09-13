@@ -1996,6 +1996,10 @@ PrefabInstance:
       propertyPath: stormWarning
       value: 
       objectReference: {fileID: 68606728}
+    - target: {fileID: 2629362640297280234, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
+      propertyPath: playerManager
+      value: 
+      objectReference: {fileID: 1545921228}
     - target: {fileID: 5545649110459428271, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
       propertyPath: player
       value: 
@@ -7100,7 +7104,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  maxCharges: 8
   movementSpeed: 10
   HP_UI: {fileID: 1512255335}
   EXP_UI: {fileID: 900036912}

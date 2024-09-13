@@ -59,5 +59,4 @@ public class PlayerController : MonoBehaviour
             playerManager.IncreaseCharges(-1);
         }
     }
-
 }
