@@ -76,9 +76,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7593362264729786856}
   - {fileID: 413934588955154911}
   - {fileID: 5082978288218817140}
-  - {fileID: 7593362264729786856}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2160608350140260047
@@ -94,11 +94,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbPrefab: {fileID: -8088963625496239872, guid: 3995244c9c166024b85a4a88f03cae31, type: 3}
+  healOrbPrefab: {fileID: 8079909649850559125, guid: 8a8877cb298a7c14399d5495f784e550, type: 3}
+  orbChance: 3
+  healOrbChance: 1
   initialOrbSpawn: 2
   maxOrbSpawn: 5
   spawnRate: 2
   orbsPerSpawn: 1
-  showLocationSquares: 0
+  showLocationSquares: 1
 --- !u!1 &7346268629218867562
 GameObject:
   m_ObjectHideFlags: 0

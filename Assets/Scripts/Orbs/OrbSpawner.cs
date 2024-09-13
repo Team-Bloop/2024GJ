@@ -9,7 +9,18 @@ public class OrbSpawner : MonoBehaviour
     const int MAX_SPAWN_ATTEMPTS = 10;
 
     [SerializeField]
-    private Orb orbPrefab;
+    private OrbBase orbPrefab;
+
+    [SerializeField]
+    private OrbBase healOrbPrefab;
+
+    [SerializeField]
+    [Min(1)]
+    private int orbChance;
+
+    [SerializeField]
+    [Min(1)]
+    private int healOrbChance;
 
     [SerializeField]
     [Min(0)]
@@ -34,12 +45,15 @@ public class OrbSpawner : MonoBehaviour
     private int orbCount;
     private float currentTime;
     private List<Transform> locations;
+    private int totalOrbChance;
 
     private void Start()
     {
         orbCount = GetComponentsInChildren<Orb>().Length;
         currentTime = 0f;
         locations = new List<Transform>();
+        totalOrbChance = orbChance + healOrbChance;
+        healOrbChance += orbChance;
 
         Transform locationsTransform = transform.Find("Locations");
         locationsTransform.GetComponent<SortingGroup>().sortingOrder = showLocationSquares ? 0 : -2;
@@ -72,6 +86,8 @@ public class OrbSpawner : MonoBehaviour
         maxOrbSpawn = 1;
         spawnRate = 0.1f;
         orbsPerSpawn = 1;
+        orbChance = 1;
+        healOrbChance = 1;
     }
 
     private void Update()
@@ -140,7 +156,17 @@ public class OrbSpawner : MonoBehaviour
 
             if (canSpawn)
             {
-                Instantiate(orbPrefab, location, Quaternion.identity);
+                int orbNum = UnityEngine.Random.Range(1, totalOrbChance + 1);
+
+                if (orbNum <= orbChance)
+                {
+                    Instantiate(orbPrefab, location, Quaternion.identity, transform);
+                } else
+                {
+                    Instantiate(healOrbPrefab, location, Quaternion.identity, transform);
+                }
+
+                Instantiate(orbPrefab, location, Quaternion.identity, transform);
                 orbCount++;
             } else
             {

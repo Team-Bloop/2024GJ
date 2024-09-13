@@ -1,21 +1,11 @@
 using UnityEngine;
 
-public class Orb : MonoBehaviour
+public class OrbBase : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Time in seconds")]
     [Min(0f)]
     private float initialTimeToCollect;
-
-    [SerializeField]
-    [Tooltip("Exp given to player when collected")]
-    [Min(1)]
-    private int exp;
-
-    [SerializeField]
-    [Tooltip("Charge(s) given to player when collected")]
-    [Min(1)]
-    private int charge;
 
     [SerializeField]
     [Tooltip("Color when orb has been collected")]
@@ -42,7 +32,7 @@ public class Orb : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         tempColor = spriteRenderer.color;
         initialColor = spriteRenderer.color;
-        orbSpawner = GameObject.FindGameObjectWithTag("OrbSpawner").GetComponent<OrbSpawner>();
+        orbSpawner = GetComponentInParent<OrbSpawner>();
 
         isDying = false;
         deathAnimTime = 0.5f;
@@ -52,8 +42,6 @@ public class Orb : MonoBehaviour
     private void Reset()
     {
         initialTimeToCollect = 0f;
-        exp = 1;
-        charge = 1;
     }
 
     private void Update()
@@ -70,15 +58,15 @@ public class Orb : MonoBehaviour
 
             if (deathAnimTime < 0)
             {
-                Destroy(gameObject);
                 orbSpawner.DecreaseOrbs();
+                Destroy(gameObject);
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag != "Player")
+        if (collision.tag != "Player")
         {
             return;
         }
@@ -90,7 +78,7 @@ public class Orb : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.tag != "Player")
+        if (collision.tag != "Player")
         {
             return;
         }
@@ -134,12 +122,8 @@ public class Orb : MonoBehaviour
         get { return completionAmt; }
     }
 
-    private void OnCollected(Collider2D collision)
+    protected virtual void OnCollected(Collider2D collision)
     {
-        PlayerManager player = collision.GetComponent<PlayerManager>();
-        Debug.Log(player.IncreaseEXP(exp));
-        Debug.Log($"Current Charge: {player.IncreaseCharges(charge)}");
-
         isDying = true;
         foreach (BoxCollider2D collider in GetComponents<BoxCollider2D>())
         {
