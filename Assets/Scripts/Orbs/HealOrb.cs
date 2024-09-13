@@ -6,6 +6,8 @@ public class HealOrb : OrbBase
     [Min(1)]
     private int heal;
 
+    protected HealOrb() : base(false) { }
+
     private void Reset()
     {
         heal = 1;

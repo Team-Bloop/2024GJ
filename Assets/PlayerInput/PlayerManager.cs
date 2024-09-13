@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
 {
     private const float MIN_MAX_HEALTH = 1f;
     private const int MAX_CHARGES = 8;
+    private const float MAX_COLLECT_SPEED = 0.8f;
 
     [SerializeField]
     [Min(MIN_MAX_HEALTH)]
@@ -18,7 +19,7 @@ public class PlayerManager : MonoBehaviour
     private float movementSpeed;
 
     private float currentHealth;
-    private float collectSpeed; // 0 - 1, ie: 0.9 -> 90% faster
+    private float collectSpeed; // 0 - 1, ie: 0.75 -> reduce collect time by 75%
 
     private int exp;
     private int level; // at the moment each level will only require 20 exp
@@ -37,6 +38,7 @@ public class PlayerManager : MonoBehaviour
         currentHealth = maxHealth;
         collectSpeed = 0f;
         exp = 0;
+        print(MAX_COLLECT_SPEED);
     }
 
     private void Reset()
@@ -69,6 +71,8 @@ public class PlayerManager : MonoBehaviour
                 Utility.Quit();
                 throw new ArgumentException("Movement Speed cannot be less than 0");
             }
+            PlayerController playerController = GetComponent<PlayerController>();
+            playerController.MoveSpeed = value;
             movementSpeed = value;
         }
     }
@@ -83,13 +87,19 @@ public class PlayerManager : MonoBehaviour
         get { return collectSpeed; }
         set
         {
-            if (value < 0 || value > 1)
+            if (value > MAX_COLLECT_SPEED)
             {
-                Utility.Quit();
-                throw new ArgumentException("CollectSpeed value needs to be between 0 and 1 (both inclusive)");
+                collectSpeed = MAX_COLLECT_SPEED;
+                Debug.LogWarning($"Collect Speed value more than player's max collect speed " +
+                    $"({MAX_COLLECT_SPEED}), variable has been set to {MAX_COLLECT_SPEED}");
+            } else if (value < 0)
+            {
+                collectSpeed = 0;
+                Debug.LogWarning("Collect Speed value less than 0, variable has been set to 0");
+            } else
+            {
+                collectSpeed = value;
             }
-
-            collectSpeed = value;
         }
     }
 
@@ -112,14 +122,16 @@ public class PlayerManager : MonoBehaviour
         }
 
         currentHealth -= amt;
-        float percentageDamage = amt / currentHealth;
+        float percentageDamage = amt / maxHealth;
         HP_UI.GetComponent<HPUI>().changeHPBarPosition(percentageDamage);
+        Debug.Log($"CURRENT HP: {currentHealth}");
         // the line below will damage the player
         // the float is the percetange of total hp lost by the player
         // HP_UI.GetComponent<HPUI>().changeHPBarPosition(0.1f);
         // the line below will recover health for the player
         // the float is the percentage of total hp recovered by the player
-        // HP_UI.GetComponent<HPUI>().changeHPBarPosition(-0.1f);
+        // HP_UI.GetComponent<HPUI>().changeHPBarPosition(-0.1f)
+
         if (currentHealth <= 0f)
         {
             Die();

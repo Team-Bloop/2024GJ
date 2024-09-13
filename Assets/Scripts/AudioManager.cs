@@ -37,6 +37,9 @@ public class AudioManager : MonoBehaviour
     private float bgmVolume = 0.5f;
     private float sfxVolume = 0.5f;
 
+    private bool bgmFade = false;
+    private float bgmFadeValue = 2f;
+
     void Awake()
     {
         try {
@@ -61,6 +64,17 @@ public class AudioManager : MonoBehaviour
         AudioManager.PlayMainBGM(0);
     }
 
+    void Update() 
+    {
+        if (bgmFade == true) {
+            BGMFade();
+        } else {
+            if (bgmAudioSource.volume < masterVolume * bgmVolume) {
+                bgmAudioSource.volume += bgmFadeValue;
+            }
+        }
+    }
+
     public void volumeSet() {
         masterVolume = m_Volume.value;
         bgmVolume = bgm_Volume.value;
@@ -75,11 +89,37 @@ public class AudioManager : MonoBehaviour
     //}
     [Tooltip("value is dependent on which bgm to be played in the list of bgms starting from 0")]
     public static void PlayMainBGM(int value) {
+        instance.bgmAudioSource.volume = instance.masterVolume * instance.bgmVolume;
         AudioClip[] clips = instance.soundList[(int)SoundType.PEACEFUL_BGM].Sounds;
         instance.bgmAudioSource.loop = true;
         instance.bgmAudioSource.clip = clips[value];
-        instance.bgmAudioSource.volume = instance.masterVolume * instance.bgmVolume;
         instance.bgmAudioSource.Play(0);
+    }
+    public static void PlayGameOverBGM() {
+        instance.bgmAudioSource.volume = instance.masterVolume * instance.bgmVolume;
+        AudioClip[] clips = instance.soundList[(int)SoundType.GAME_OVER_BGM].Sounds;
+        instance.bgmAudioSource.loop = true;
+        instance.bgmAudioSource.clip = clips[0];
+        instance.bgmAudioSource.Play(0);
+    }
+    public static void toggleBGMFade() {
+        instance.bgmFade = !instance.bgmFade;
+        Debug.Log("BGM FADE TOGGLED.");
+    }
+    public static void BGMFadeOn() {
+        instance.bgmFade = true;
+    }
+    public static void BGMFadeOff() {
+        instance.bgmFade = false;
+    }
+    public bool getBGMFade {
+        get { return instance.bgmFade; }
+    }
+
+    private static void BGMFade() {
+        if (instance.bgmAudioSource.volume > 0) {
+            instance.bgmAudioSource.volume -= instance.bgmFadeValue;
+        }
     }
 
     // For SFX on a trigger

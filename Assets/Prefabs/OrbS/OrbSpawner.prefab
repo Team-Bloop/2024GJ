@@ -93,15 +93,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0226e920bf0b85543b4eac0879469924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbPrefab: {fileID: -8088963625496239872, guid: 3995244c9c166024b85a4a88f03cae31, type: 3}
-  healOrbPrefab: {fileID: 8079909649850559125, guid: 8a8877cb298a7c14399d5495f784e550, type: 3}
-  orbChance: 3
-  healOrbChance: 1
-  initialOrbSpawn: 2
-  maxOrbSpawn: 5
-  spawnRate: 2
+  orbSpawnData:
+  - orbPrefab: {fileID: -8088963625496239872, guid: 3995244c9c166024b85a4a88f03cae31, type: 3}
+    orbChance: 5
+  - orbPrefab: {fileID: 8079909649850559125, guid: 8a8877cb298a7c14399d5495f784e550, type: 3}
+    orbChance: 2
+  - orbPrefab: {fileID: 8071669109584515768, guid: 3875566e4f679a640bde7fbaf7504ee3, type: 3}
+    orbChance: 1
+  initialOrbSpawn: 0
+  maxOrbSpawn: 12
+  spawnRate: 4
   orbsPerSpawn: 1
-  showLocationSquares: 1
+  showLocationSquares: 0
 --- !u!1 &7346268629218867562
 GameObject:
   m_ObjectHideFlags: 0
