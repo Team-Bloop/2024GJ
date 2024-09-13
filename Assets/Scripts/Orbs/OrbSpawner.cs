@@ -30,7 +30,7 @@ public class OrbSpawnData
                 throw new ArgumentException("RandIntTrigger cannot be less than 1");
             }
 
-            randIntTrigger = value; 
+            randIntTrigger = value;
         } 
     }
 }

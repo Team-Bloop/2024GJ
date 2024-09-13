@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OrbBase : MonoBehaviour
 {
-    public const float DEATH_ANIM_TIME = 0.5f;
+    protected const float DEATH_ANIM_TIME = 0.5f;
 
     [SerializeField]
     [Tooltip("Time in seconds")]
@@ -69,7 +69,7 @@ public class OrbBase : MonoBehaviour
                 orbSpawner.DecreaseOrbs();
                 if (hasOrbDuration)
                 {
-                    isDying = false;
+                    enabled = false;
                 } else
                 {
                     Destroy(gameObject);

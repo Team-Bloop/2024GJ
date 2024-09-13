@@ -9,7 +9,7 @@ public class SpeedOrb : OrbBase
     private float movementSpeedBuff;
 
     [SerializeField]
-    [Tooltip("Collect Speed percentage between 0 and 1 (ie: 0.9 = 90%; 1 = instant collect)")]
+    [Tooltip("Collect Speed percentage between 0 and 1 (ie: 0.75 -> reduce collect time by 75%")]
     [Range(0f, 1f)]
     private float collectSpeedBuff;
 

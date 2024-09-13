@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
 {
     private const float MIN_MAX_HEALTH = 1f;
     private const int MAX_CHARGES = 8;
+    private const float MAX_COLLECT_SPEED = 0.8f;
 
     [SerializeField]
     [Min(MIN_MAX_HEALTH)]
@@ -18,7 +19,7 @@ public class PlayerManager : MonoBehaviour
     private float movementSpeed;
 
     private float currentHealth;
-    private float collectSpeed; // 0 - 1, ie: 0.9 -> 90% faster
+    private float collectSpeed; // 0 - 1, ie: 0.75 -> reduce collect time by 75%
 
     private int exp;
     private int level; // at the moment each level will only require 20 exp
@@ -37,6 +38,7 @@ public class PlayerManager : MonoBehaviour
         currentHealth = maxHealth;
         collectSpeed = 0f;
         exp = 0;
+        print(MAX_COLLECT_SPEED);
     }
 
     private void Reset()
@@ -85,10 +87,11 @@ public class PlayerManager : MonoBehaviour
         get { return collectSpeed; }
         set
         {
-            if (value > 1)
+            if (value > MAX_COLLECT_SPEED)
             {
-                collectSpeed = 1;
-                Debug.LogWarning("Collect Speed value more than 1, variable has been set to 1");
+                collectSpeed = MAX_COLLECT_SPEED;
+                Debug.LogWarning($"Collect Speed value more than player's max collect speed " +
+                    $"({MAX_COLLECT_SPEED}), variable has been set to {MAX_COLLECT_SPEED}");
             } else if (value < 0)
             {
                 collectSpeed = 0;
