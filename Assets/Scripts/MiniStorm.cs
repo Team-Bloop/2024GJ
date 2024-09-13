@@ -27,15 +27,16 @@ public class MiniStorm : MonoBehaviour
     private float chaseRate = 0.1f;
 
     public SpriteRenderer SelectedIndicator;
-
     public GameObject Player;
-    private PlayerManager playerManager;
+
+    Coroutine stormDamage;
+    PlayerManager playerManager;
 
     bool playerDetected = true;
     bool stormDamageActive = false;
 
     bool shrinking = true;
-    bool chasePlayer = false;
+    bool chasePlayer = true;
     Vector3 currentScale;
     Vector3 shrinkScale;
     Vector3 expandScale;
@@ -43,7 +44,11 @@ public class MiniStorm : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject == Player)
+        {
+            if (stormDamage != null)
+                StopCoroutine(stormDamage);
             playerDetected = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -65,9 +70,9 @@ public class MiniStorm : MonoBehaviour
 
     private void Update()
     {
-        if (!playerDetected && !stormDamageActive)
+        if (playerDetected && !stormDamageActive)
         {
-            StartCoroutine(StormContactDamage());
+            stormDamage = StartCoroutine(StormContactDamage());
         }
 
         Expand();
@@ -80,7 +85,7 @@ public class MiniStorm : MonoBehaviour
             Collapse();
         }
 
-        if (playerManager.Level > minChaseLevel)
+        if (playerManager.Level > minChaseLevel && chasePlayer)
             ChasePlayer();
     }
 
@@ -91,10 +96,11 @@ public class MiniStorm : MonoBehaviour
     IEnumerator StormContactDamage()
     {
         stormDamageActive = true;
-        yield return new WaitForSeconds(stormDamageRate);
-        if (!playerDetected)
+        if (playerDetected)
         {
+            Debug.Log("Player Damaged by Mini Storm");
             playerManager.Damage(stormDamageValue);
+            yield return new WaitForSeconds(stormDamageRate);
         }
         stormDamageActive = false;
     }
@@ -159,6 +165,8 @@ public class MiniStorm : MonoBehaviour
 
     public void Collapse()
     {
+        if (stormDamage != null)
+            StopCoroutine(stormDamage);
         Destroy(this.gameObject);
     }
 
