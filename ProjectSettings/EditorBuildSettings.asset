@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GAME_OVER.unity
     guid: 97bdaffa5cf2ef64ca931c95b30dc4aa
+  - enabled: 1
+    path: Assets/Scenes/Peanut_Scene.unity
+    guid: d51f8fec4f184d8488d65ba959ac5874
   m_configObjects: {}

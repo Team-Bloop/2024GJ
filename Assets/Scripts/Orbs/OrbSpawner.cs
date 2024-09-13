@@ -84,10 +84,14 @@ public class OrbSpawner : MonoBehaviour
         orbChanceUpperBound = totalOrbChance + 1;
 
         Transform locationsTransform = transform.Find("Locations");
-        locationsTransform.GetComponent<SortingGroup>().sortingOrder = showLocationSquares ? 0 : -2;
 
         foreach (Transform t in locationsTransform)
         {
+            if (!showLocationSquares)
+            {
+                t.GetComponent<SpriteRenderer>().enabled = false;
+            }
+
             locations.Add(t);
         }
 
