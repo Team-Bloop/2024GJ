@@ -70,9 +70,7 @@ public class AudioManager : MonoBehaviour
         if (bgmFade == true) {
             BGMFade();
         } else {
-            if (bgmAudioSource.volume < (masterVolume * bgmVolume)) {
-                bgmAudioSource.volume += bgmFadeValue;
-            }
+            BGMUnfade();
         }
     }
 
@@ -135,14 +133,22 @@ public class AudioManager : MonoBehaviour
         get { return instance.bgmFade; }
     }
 
-    private static void BGMFade() {
+    private static void BGMFade() 
+    {
         if (instance.bgmAudioSource.volume > 0) {
             instance.bgmAudioSource.volume -= instance.bgmFadeValue;
         }
     }
-
+    private static void BGMUnfade()
+    {
+        if (instance.bgmAudioSource.volume < (instance.masterVolume * instance.bgmVolume)) {
+            instance.bgmAudioSource.volume += instance.bgmFadeValue;
+        }
+    }
+    
     // For SFX on a trigger
-    public static void PlaySound(SoundType sound) {
+    public static void PlaySound(SoundType sound)
+    {
         AudioClip[] clips = instance.soundList[(int)sound].Sounds;
         instance.sfxAudioSource.volume = instance.masterVolume * instance.sfxVolume;
         instance.sfxAudioSource.PlayOneShot(clips[0], instance.sfxAudioSource.volume);
@@ -153,7 +159,8 @@ public class AudioManager : MonoBehaviour
     //    AudioClip[] clips = instance.soundList[(int)sound].Sounds;
     //}
 
-    public void masterVolumeChange() {
+    public void masterVolumeChange()
+    {
         instance.masterVolume = m_Volume.value;
         instance.bgmAudioSource.volume = instance.masterVolume * instance.bgmVolume;
         instance.sfxAudioSource.volume = instance.masterVolume * instance.sfxVolume;
@@ -167,7 +174,8 @@ public class AudioManager : MonoBehaviour
         instance.bgmAudioSource.volume = instance.masterVolume * instance.bgmVolume;
     }
 
-    public void sfxVolumeChange() {
+    public void sfxVolumeChange()
+    {
         instance.sfxVolume = sfx_Volume.value;
         //Debug.Log(instance.sfxVolume);
     }
