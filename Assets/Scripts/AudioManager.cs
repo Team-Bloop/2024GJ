@@ -2,6 +2,7 @@ using UnityEngine.Audio;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 public enum SoundType {
     PEACEFUL_BGM,
     END_OF_ALL_BGM,
@@ -9,6 +10,7 @@ public enum SoundType {
     UI_BUTTON_INTERACT,
     COLLECT,
     PLAYER_HURT,
+    PLAYER_UPGRADE,
     DESTROY_MINISTORM
 }
 
@@ -38,7 +40,7 @@ public class AudioManager : MonoBehaviour
     private float sfxVolume = 0.5f;
 
     private bool bgmFade = false;
-    private float bgmFadeValue = 2f;
+    private float bgmFadeValue = 0.001f;
 
     void Awake()
     {
@@ -69,16 +71,14 @@ public class AudioManager : MonoBehaviour
         if (bgmFade == true) {
             BGMFade();
         } else {
-            if (bgmAudioSource.volume < masterVolume * bgmVolume) {
-                bgmAudioSource.volume += bgmFadeValue;
-            }
+            BGMUnfade();
         }
     }
 
     public void volumeSet() {
-        masterVolume = m_Volume.value;
-        bgmVolume = bgm_Volume.value;
-        sfxVolume = sfx_Volume.value;
+        instance.masterVolume = instance.m_Volume.value;
+        instance.bgmVolume = instance.bgm_Volume.value;
+        instance.sfxVolume = instance.sfx_Volume.value;
     }
 
     // If we want multiple types of sounds
@@ -102,6 +102,24 @@ public class AudioManager : MonoBehaviour
         instance.bgmAudioSource.clip = clips[0];
         instance.bgmAudioSource.Play(0);
     }
+
+    IEnumerator BgmChanger(SoundType soundType) {
+        yield return new WaitUntil(checkBGMVolZero);
+        AudioClip[] clips = instance.soundList[(int)soundType].Sounds;
+        instance.bgmAudioSource.loop = true;
+        instance.bgmAudioSource.clip = clips[0];
+        BGMFadeOff();
+        instance.bgmAudioSource.Play(0);
+    }
+    private bool checkBGMVolZero() {
+        return instance.bgmAudioSource.volume == 0;
+    }
+    public static void changeBGM(SoundType soundType) {
+        Debug.Log("CHANGING BGM...");
+        BGMFadeOn();
+        instance.StartCoroutine(instance.BgmChanger(soundType));
+        
+    }
     public static void toggleBGMFade() {
         instance.bgmFade = !instance.bgmFade;
         Debug.Log("BGM FADE TOGGLED.");
@@ -116,14 +134,22 @@ public class AudioManager : MonoBehaviour
         get { return instance.bgmFade; }
     }
 
-    private static void BGMFade() {
+    private static void BGMFade() 
+    {
         if (instance.bgmAudioSource.volume > 0) {
             instance.bgmAudioSource.volume -= instance.bgmFadeValue;
         }
     }
-
+    private static void BGMUnfade()
+    {
+        if (instance.bgmAudioSource.volume < (instance.masterVolume * instance.bgmVolume)) {
+            instance.bgmAudioSource.volume += instance.bgmFadeValue;
+        }
+    }
+    
     // For SFX on a trigger
-    public static void PlaySound(SoundType sound) {
+    public static void PlaySound(SoundType sound)
+    {
         AudioClip[] clips = instance.soundList[(int)sound].Sounds;
         instance.sfxAudioSource.volume = instance.masterVolume * instance.sfxVolume;
         instance.sfxAudioSource.PlayOneShot(clips[0], instance.sfxAudioSource.volume);
@@ -134,7 +160,8 @@ public class AudioManager : MonoBehaviour
     //    AudioClip[] clips = instance.soundList[(int)sound].Sounds;
     //}
 
-    public void masterVolumeChange() {
+    public void masterVolumeChange()
+    {
         instance.masterVolume = m_Volume.value;
         instance.bgmAudioSource.volume = instance.masterVolume * instance.bgmVolume;
         instance.sfxAudioSource.volume = instance.masterVolume * instance.sfxVolume;
@@ -148,7 +175,8 @@ public class AudioManager : MonoBehaviour
         instance.bgmAudioSource.volume = instance.masterVolume * instance.bgmVolume;
     }
 
-    public void sfxVolumeChange() {
+    public void sfxVolumeChange()
+    {
         instance.sfxVolume = sfx_Volume.value;
         //Debug.Log(instance.sfxVolume);
     }
