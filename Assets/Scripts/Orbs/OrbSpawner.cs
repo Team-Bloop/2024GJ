@@ -166,7 +166,6 @@ public class OrbSpawner : MonoBehaviour
                     Instantiate(healOrbPrefab, location, Quaternion.identity, transform);
                 }
 
-                Instantiate(orbPrefab, location, Quaternion.identity, transform);
                 orbCount++;
             } else
             {
