@@ -34325,10 +34325,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2160608350140260047, guid: 5e7ea02950fa4ad4f883794754700a9d, type: 3}
-      propertyPath: orbSpawnData.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2160608350140260047, guid: 5e7ea02950fa4ad4f883794754700a9d, type: 3}
       propertyPath: orbPrefabs.Array.data[0].orbChance
       value: 0
       objectReference: {fileID: 0}
@@ -34344,18 +34340,6 @@ PrefabInstance:
       propertyPath: orbPrefabs.Array.data[1].orbPrefab
       value: 
       objectReference: {fileID: 8079909649850559125, guid: 8a8877cb298a7c14399d5495f784e550, type: 3}
-    - target: {fileID: 2160608350140260047, guid: 5e7ea02950fa4ad4f883794754700a9d, type: 3}
-      propertyPath: orbSpawnData.Array.data[1].orbChance
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2160608350140260047, guid: 5e7ea02950fa4ad4f883794754700a9d, type: 3}
-      propertyPath: orbSpawnData.Array.data[2].orbChance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2160608350140260047, guid: 5e7ea02950fa4ad4f883794754700a9d, type: 3}
-      propertyPath: orbSpawnData.Array.data[2].orbPrefab
-      value: 
-      objectReference: {fileID: 8071669109584515768, guid: 3875566e4f679a640bde7fbaf7504ee3, type: 3}
     - target: {fileID: 3910638959434523272, guid: 5e7ea02950fa4ad4f883794754700a9d, type: 3}
       propertyPath: m_LocalScale.x
       value: 4.7785683
