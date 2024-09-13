@@ -59,7 +59,6 @@ public class OrbBase : MonoBehaviour
             if (deathAnimTime < 0)
             {
                 orbSpawner.DecreaseOrbs();
-                Destroy(gameObject);
             }
         }
     }

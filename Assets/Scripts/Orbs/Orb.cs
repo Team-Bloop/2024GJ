@@ -24,5 +24,6 @@ public class Orb : OrbBase
         Debug.Log(player.IncreaseEXP(exp));
         Debug.Log($"Current Charge: {player.IncreaseCharges(charge)}");
         base.OnCollected(collision);
+        Destroy(gameObject);
     }
 }

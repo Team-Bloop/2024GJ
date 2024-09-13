@@ -42,6 +42,12 @@ public class PlayerController : MonoBehaviour
         rb.velocity = moveVector * moveSpeed;
     }
 
+    public float MoveSpeed
+    {
+        get { return moveSpeed; }
+        set { moveSpeed = value; }
+    }
+
     private void OnMovementPerformed(InputAction.CallbackContext context)
     {
         moveVector = context.ReadValue<Vector2>();

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpeedOrb : OrbBase
@@ -13,17 +14,31 @@ public class SpeedOrb : OrbBase
     private float collectSpeedBuff;
 
     [SerializeField]
-    [Min(0f)]
+    [Min(0.1f)]
     private float duration;
 
     private void Reset()
     {
         movementSpeedBuff = 1f;
+        collectSpeedBuff = 0f;
+        duration = 0.1f;
     }
 
     protected override void OnCollected(Collider2D collision)
     {
         PlayerManager player = collision.GetComponent<PlayerManager>();
+        StartCoroutine(SpeedBuff(player));
         base.OnCollected(collision);
+    }
+
+    private IEnumerator SpeedBuff(PlayerManager player)
+    {
+        player.MovementSpeed *= movementSpeedBuff;
+        player.CollectSpeed += collectSpeedBuff;
+        yield return new WaitForSeconds(duration);
+
+        player.MovementSpeed /= movementSpeedBuff;
+        player.CollectSpeed = 0;
+        Destroy(gameObject);
     }
 }

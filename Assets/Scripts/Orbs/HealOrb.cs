@@ -16,5 +16,6 @@ public class HealOrb : OrbBase
         PlayerManager player = collision.GetComponent<PlayerManager>();
         Debug.Log(player.Damage(-heal));
         base.OnCollected(collision);
+        Destroy(gameObject);
     }
 }

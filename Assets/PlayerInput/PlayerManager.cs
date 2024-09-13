@@ -69,6 +69,8 @@ public class PlayerManager : MonoBehaviour
                 Utility.Quit();
                 throw new ArgumentException("Movement Speed cannot be less than 0");
             }
+            PlayerController playerController = GetComponent<PlayerController>();
+            playerController.MoveSpeed = value;
             movementSpeed = value;
         }
     }
@@ -83,13 +85,18 @@ public class PlayerManager : MonoBehaviour
         get { return collectSpeed; }
         set
         {
-            if (value < 0 || value > 1)
+            if (value > 1)
             {
-                Utility.Quit();
-                throw new ArgumentException("CollectSpeed value needs to be between 0 and 1 (both inclusive)");
+                collectSpeed = 1;
+                Debug.LogWarning("Collect Speed value more than 1, variable has been set to 1");
+            } else if (value < 0)
+            {
+                collectSpeed = 0;
+                Debug.LogWarning("Collect Speed value less than 0, variable has been set to 0");
+            } else
+            {
+                collectSpeed = value;
             }
-
-            collectSpeed = value;
         }
     }
 
