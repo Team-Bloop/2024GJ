@@ -2,6 +2,7 @@ using UnityEngine.Audio;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 public enum SoundType {
     PEACEFUL_BGM,
     END_OF_ALL_BGM,
@@ -101,6 +102,24 @@ public class AudioManager : MonoBehaviour
         instance.bgmAudioSource.loop = true;
         instance.bgmAudioSource.clip = clips[0];
         instance.bgmAudioSource.Play(0);
+    }
+
+    IEnumerator BgmChanger(SoundType soundType) {
+        yield return new WaitUntil(checkBGMVolZero);
+        AudioClip[] clips = instance.soundList[(int)soundType].Sounds;
+        instance.bgmAudioSource.loop = true;
+        instance.bgmAudioSource.clip = clips[0];
+        BGMFadeOff();
+        instance.bgmAudioSource.Play(0);
+    }
+    private bool checkBGMVolZero() {
+        return instance.bgmAudioSource.volume == 0;
+    }
+    public static void changeBGM(SoundType soundType) {
+        Debug.Log("CHANGING BGM...");
+        BGMFadeOn();
+        instance.StartCoroutine(instance.BgmChanger(soundType));
+        
     }
     public static void toggleBGMFade() {
         instance.bgmFade = !instance.bgmFade;

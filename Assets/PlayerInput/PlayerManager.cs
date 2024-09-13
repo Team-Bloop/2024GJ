@@ -15,6 +15,7 @@ public class PlayerManager : MonoBehaviour
     private float maxHealth;
 
     private int nearDeathHPValue = 50;
+    private bool nearDeathFlag = false;
 
     [SerializeField]
     [Min(0f)]
@@ -136,9 +137,18 @@ public class PlayerManager : MonoBehaviour
         // HP_UI.GetComponent<HPUI>().changeHPBarPosition(-0.1f)
 
         if (currentHealth < nearDeathHPValue) {
-            AudioManager.BGMFadeOn();
+            // near death
+            if (!nearDeathFlag) {
+                AudioManager.changeBGM(SoundType.END_OF_ALL_BGM);
+                Debug.Log($"NEAR DEATH: {nearDeathFlag}");
+                nearDeathFlag = true;
+            }
         } else {
-            AudioManager.BGMFadeOff();
+            // recovered
+            if (nearDeathFlag) {
+                AudioManager.changeBGM(SoundType.PEACEFUL_BGM);
+                nearDeathFlag = false;
+            }
         }
 
         if (currentHealth <= 0f)
