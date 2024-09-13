@@ -4,23 +4,43 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using GeneralUtility;
 
-public class OrbSpawner : MonoBehaviour
+[Serializable]
+// Helper class for OrbSpawner
+public class OrbSpawnData
 {
-    const int MAX_SPAWN_ATTEMPTS = 10;
-
     [SerializeField]
     private OrbBase orbPrefab;
-
-    [SerializeField]
-    private OrbBase healOrbPrefab;
 
     [SerializeField]
     [Min(1)]
     private int orbChance;
 
+    private int randIntTrigger;
+
+    public OrbBase OrbPrefab { get { return orbPrefab; } }
+    public int OrbChance { get { return orbChance; } }
+    public int RandIntTrigger 
+    {
+        get { return randIntTrigger; }
+        set 
+        {
+            if (value < 1)
+            {
+                Utility.Quit();
+                throw new ArgumentException("RandIntTrigger cannot be less than 1");
+            }
+
+            randIntTrigger = value;
+        } 
+    }
+}
+
+public class OrbSpawner : MonoBehaviour
+{
+    const int MAX_SPAWN_ATTEMPTS = 10;
+
     [SerializeField]
-    [Min(1)]
-    private int healOrbChance;
+    private OrbSpawnData[] orbSpawnData;
 
     [SerializeField]
     [Min(0)]
@@ -46,14 +66,22 @@ public class OrbSpawner : MonoBehaviour
     private float currentTime;
     private List<Transform> locations;
     private int totalOrbChance;
+    private int orbChanceUpperBound; // For Random.Range() since its upper bound is exclusive
 
     private void Start()
     {
         orbCount = GetComponentsInChildren<Orb>().Length;
         currentTime = 0f;
         locations = new List<Transform>();
-        totalOrbChance = orbChance + healOrbChance;
-        healOrbChance += orbChance;
+        totalOrbChance = 0;
+
+        foreach (OrbSpawnData data in orbSpawnData)
+        {
+            totalOrbChance += data.OrbChance;
+            data.RandIntTrigger = totalOrbChance;
+        }
+
+        orbChanceUpperBound = totalOrbChance + 1;
 
         Transform locationsTransform = transform.Find("Locations");
         locationsTransform.GetComponent<SortingGroup>().sortingOrder = showLocationSquares ? 0 : -2;
@@ -86,8 +114,6 @@ public class OrbSpawner : MonoBehaviour
         maxOrbSpawn = 1;
         spawnRate = 0.1f;
         orbsPerSpawn = 1;
-        orbChance = 1;
-        healOrbChance = 1;
     }
 
     private void Update()
@@ -156,17 +182,17 @@ public class OrbSpawner : MonoBehaviour
 
             if (canSpawn)
             {
-                int orbNum = UnityEngine.Random.Range(1, totalOrbChance + 1);
+                int orbNum = UnityEngine.Random.Range(1, orbChanceUpperBound);
 
-                if (orbNum <= orbChance)
+                foreach(OrbSpawnData data in orbSpawnData)
                 {
-                    Instantiate(orbPrefab, location, Quaternion.identity, transform);
-                } else
-                {
-                    Instantiate(healOrbPrefab, location, Quaternion.identity, transform);
+                    if (orbNum <= data.RandIntTrigger)
+                    {
+                        Instantiate(data.OrbPrefab, location, Quaternion.identity, transform);
+                        orbCount++;
+                        break;
+                    }
                 }
-
-                orbCount++;
             } else
             {
                 i--;

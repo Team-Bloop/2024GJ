@@ -12,6 +12,8 @@ public class Orb : OrbBase
     [Min(1)]
     private int charge;
 
+    protected Orb() : base(false) { }
+
     private void Reset()
     {
         exp = 1;
