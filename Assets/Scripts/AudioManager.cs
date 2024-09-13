@@ -10,6 +10,7 @@ public enum SoundType {
     UI_BUTTON_INTERACT,
     COLLECT,
     PLAYER_HURT,
+    PLAYER_UPGRADE,
     DESTROY_MINISTORM
 }
 
