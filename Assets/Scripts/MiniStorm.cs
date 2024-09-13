@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class MiniStorm : MonoBehaviour
 {
     [SerializeField]
-    private float stormDamageValue = 1f;
+    private float stormDamageValue = 20f;
     [SerializeField]
     private float stormDamageRate = 1f;
 
@@ -24,7 +24,7 @@ public class MiniStorm : MonoBehaviour
     [SerializeField]
     private int minChaseLevel = 2;
     [SerializeField]
-    private float chaseRate = 0.1f;
+    private float chaseRate = 0.5f;
 
     public SpriteRenderer SelectedIndicator;
     public GameObject Player;
