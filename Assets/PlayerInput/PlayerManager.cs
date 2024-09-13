@@ -7,15 +7,11 @@ using UI;
 public class PlayerManager : MonoBehaviour
 {
     private const float MIN_MAX_HEALTH = 1f;
-    private const int MIN_MAX_CHARGES = 8;
+    private const int MAX_CHARGES = 8;
 
     [SerializeField]
     [Min(MIN_MAX_HEALTH)]
     private float maxHealth;
-
-    [SerializeField]
-    [Min(MIN_MAX_CHARGES)]
-    private int maxCharges;
 
     [SerializeField]
     [Min(0f)]
@@ -46,7 +42,6 @@ public class PlayerManager : MonoBehaviour
     private void Reset()
     {
         maxHealth = MIN_MAX_HEALTH;
-        maxCharges = MIN_MAX_CHARGES;
         movementSpeed = 10;
     }
 
@@ -150,8 +145,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         exp += amt;
-        EXP_UI.GetComponent<EXPUI>().updateEXPUI(GetEXPPercentage(), getCurrentLevel());
-        //Debug.Log($"CURRENT EXP: {exp}");
+        EXP_UI.GetComponent<EXPUI>().updateEXPUI(GetEXPPercentage(), GetCurrentLevel());
         return exp;
     }
 
@@ -161,9 +155,8 @@ public class PlayerManager : MonoBehaviour
         return currentlvlExp / maxExpPerLevel;
     }
 
-    public int getCurrentLevel() {
+    public int GetCurrentLevel() {
         level = exp / maxExpPerLevel + 1;
-        //Debug.Log($"CURRENT LEVEL: {level}");
         return level;
     }
 
@@ -177,9 +170,9 @@ public class PlayerManager : MonoBehaviour
 
         charges += amt;
 
-        if (charges > maxCharges)
+        if (charges > MAX_CHARGES)
         {
-            charges = maxCharges; 
+            charges = MAX_CHARGES; 
         }
 
         AP_Sprite.GetComponent<AP_UI>().updateSprite(charges);
