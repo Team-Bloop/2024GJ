@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
     private float sfxVolume = 0.5f;
 
     private bool bgmFade = false;
-    private float bgmFadeValue = 2f;
+    private float bgmFadeValue = 0.001f;
 
     void Awake()
     {
@@ -69,16 +69,16 @@ public class AudioManager : MonoBehaviour
         if (bgmFade == true) {
             BGMFade();
         } else {
-            if (bgmAudioSource.volume < masterVolume * bgmVolume) {
+            if (bgmAudioSource.volume < (masterVolume * bgmVolume)) {
                 bgmAudioSource.volume += bgmFadeValue;
             }
         }
     }
 
     public void volumeSet() {
-        masterVolume = m_Volume.value;
-        bgmVolume = bgm_Volume.value;
-        sfxVolume = sfx_Volume.value;
+        instance.masterVolume = instance.m_Volume.value;
+        instance.bgmVolume = instance.bgm_Volume.value;
+        instance.sfxVolume = instance.sfx_Volume.value;
     }
 
     // If we want multiple types of sounds
