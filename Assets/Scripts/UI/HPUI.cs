@@ -26,6 +26,9 @@ public class HPUI : MonoBehaviour
             Debug.Log($"HP LOST (NEGATIVE FOR RECOVERED): {percentage * 100}%");
             hpValue = percentage * hpRectTransform.rect.width;
             hpRectTransform.localPosition = checkVector;
+        } else if (hpRectTransform.localPosition.x > originalPositionX - hpRectTransform.rect.width
+            && checkVector.x >= originalPositionX) {
+            hpRectTransform.localPosition = originalPosition;
         }
     }
 
