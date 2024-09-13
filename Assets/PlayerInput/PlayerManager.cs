@@ -14,6 +14,8 @@ public class PlayerManager : MonoBehaviour
     [Min(MIN_MAX_HEALTH)]
     private float maxHealth;
 
+    private int nearDeathHPValue = 20;
+
     [SerializeField]
     [Min(0f)]
     private float movementSpeed;
@@ -131,6 +133,11 @@ public class PlayerManager : MonoBehaviour
         // the line below will recover health for the player
         // the float is the percentage of total hp recovered by the player
         // HP_UI.GetComponent<HPUI>().changeHPBarPosition(-0.1f)
+
+        if (currentHealth < nearDeathHPValue) 
+        {
+            AudioManager.BGMFadeOn();    
+        }
 
         if (currentHealth <= 0f)
         {
