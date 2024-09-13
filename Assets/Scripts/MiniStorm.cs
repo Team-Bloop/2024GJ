@@ -47,6 +47,7 @@ public class MiniStorm : MonoBehaviour
         {
             if (stormDamage != null)
                 StopCoroutine(stormDamage);
+            stormDamageActive = false;
             playerDetected = false;
         }
     }
