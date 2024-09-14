@@ -42,7 +42,6 @@ public class PlayerManager : MonoBehaviour
         currentHealth = maxHealth;
         collectSpeed = 0f;
         exp = 0;
-        print(MAX_COLLECT_SPEED);
     }
 
     private void Reset()
