@@ -5,6 +5,9 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private Rigidbody2D rb;
+    [SerializeField]
+    [Min(1)]
+    private int stormDestroyExp;
 
     private PlayerInputActions input = null;
     private Vector2 moveVector = Vector2.zero;
@@ -62,6 +65,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerManager.Charges > 0 && playerAbility.DestroyStorm())
         {
+            playerManager.IncreaseEXP(stormDestroyExp);
             playerManager.IncreaseCharges(-1);
         }
     }

@@ -440,7 +440,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2460b0dff4fed541b08a2acff4ab91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectedStorm: {fileID: 0}
 --- !u!212 &153731824
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23152,6 +23151,10 @@ PrefabInstance:
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5545649110459428271, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
+      propertyPath: worldBorder
+      value: 
+      objectReference: {fileID: 1056212184}
+    - target: {fileID: 5545649110459428271, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
       propertyPath: spawnQuantity
       value: 1
       objectReference: {fileID: 0}
@@ -29106,6 +29109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1545921230}
+  stormDestroyExp: 10
 --- !u!50 &1545921230
 Rigidbody2D:
   serializedVersion: 4
