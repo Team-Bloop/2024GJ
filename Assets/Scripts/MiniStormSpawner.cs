@@ -5,9 +5,6 @@ using UnityEngine.Tilemaps;
 
 public class MiniStormSpawner : MonoBehaviour
 {
-    [SerializeField] Transform borderStormTransform;
-    [SerializeField] Transform borderStormMaskTransform;
-
     [SerializeField] Grid grid;
     [SerializeField] Tilemap worldBorder;
 
@@ -40,10 +37,6 @@ public class MiniStormSpawner : MonoBehaviour
 
     public void StartStorms()
     {
-        if (borderStormTransform.localScale.x <= 0.01f)
-        {
-            return;
-        }
         StartCoroutine(GenerateStorm());
         triggerStorms = false;
     }

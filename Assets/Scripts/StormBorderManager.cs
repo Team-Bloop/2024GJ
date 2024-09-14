@@ -8,8 +8,8 @@ public class StormBorderManager : MonoBehaviour
     GameObject player;
     PlayerManager playerManager;
 
-    [SerializeField]
-    StormWarning stormWarning;
+/*    [SerializeField]
+    StormWarning stormWarning;*/
 
     [SerializeField]
     float shrinkRate = 0.01f;

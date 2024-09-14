@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerManager.Charges > 0 && playerAbility.DestroyStorm())
         {
+            playerManager.IncrementStormCount();
             playerManager.IncreaseEXP(stormDestroyExp);
             playerManager.IncreaseCharges(-1);
         }
