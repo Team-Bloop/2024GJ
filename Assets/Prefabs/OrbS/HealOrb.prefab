@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7941210988668004700}
   - component: {fileID: 5111681667162383110}
   - component: {fileID: 8079909649850559125}
+  - component: {fileID: 1433365049406504815}
   m_Layer: 0
   m_Name: HealOrb
   m_TagString: Orb
@@ -192,3 +193,24 @@ MonoBehaviour:
   initialTimeToCollect: 1
   targetColor: {r: 1, g: 1, b: 1, a: 0}
   heal: 10
+--- !u!95 &1433365049406504815
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595801580516669061}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9b094bd4e8e0abd4cbe921c7241b48c9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
