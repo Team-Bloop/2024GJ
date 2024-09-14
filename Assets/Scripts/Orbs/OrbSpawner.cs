@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using GeneralUtility;
+using static UnityEditor.Progress;
 
 [Serializable]
 // Helper class for OrbSpawner
@@ -174,7 +175,7 @@ public class OrbSpawner : MonoBehaviour
             bool canSpawn = true;
 
             Physics2D.OverlapBox(location, Vector2.one, 0f, new ContactFilter2D().NoFilter(), results);
-            
+
             foreach (Collider2D item in results)
             {
                 if (item != null && (item.tag == "Orb" || item.tag == "Player" || item.tag == "Storm" || item.tag == "CollisionTiles"))
