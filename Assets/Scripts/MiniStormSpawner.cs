@@ -6,11 +6,16 @@ public class MiniStormSpawner : MonoBehaviour
 {
     [SerializeField] Transform borderStormTransform;
     [SerializeField] Transform borderStormMaskTransform;
+
     [SerializeField] GameObject stormPrefab;
     [SerializeField] List<Sprite> StormSpritesList = new List<Sprite>();
 
     [SerializeField] GameObject player;
-    [SerializeField] bool TriggerStorms = false;
+
+    [SerializeField] float SpawnRate;
+    [SerializeField] float stormSizeRatio;
+    [SerializeField] float stormSpeedRatio;
+    [SerializeField] bool TriggerStorms;
 
     Transform playerTransform;
     float stormSpawnMargin = 5f;
@@ -55,6 +60,12 @@ public class MiniStormSpawner : MonoBehaviour
         }
     }
 
+    Vector3 GenerateStormSize()
+    {
+        
+        return Vector3.zero;
+    }
+
     Vector3 GenerateLocation()
     {
         float xRange = (borderStormTransform.localScale.x / 2 * borderStormMaskTransform.localScale.x) - 0.5f + stormSpawnMargin;
@@ -70,6 +81,4 @@ public class MiniStormSpawner : MonoBehaviour
 
         return new Vector3(xRange, yRange, zRange);
     }
-
-    
 }

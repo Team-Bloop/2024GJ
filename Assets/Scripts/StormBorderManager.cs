@@ -19,7 +19,7 @@ public class StormBorderManager : MonoBehaviour
     [SerializeField]
     float borderDamageRate = 2f;
     [SerializeField]
-    float borderShrinkLevel = 3;
+    float borderClosedLevel = 30;
 
     bool playerDetected = false;
     bool borderDamageActive = false;
@@ -28,18 +28,16 @@ public class StormBorderManager : MonoBehaviour
 
     private void Update()
     {
-        this.transform.position = player.transform.position;
-
-        if (playerManager.GetCurrentLevel() >= borderShrinkLevel && transform.localScale != Vector3.zero)
+        if (1f - playerManager.GetCurrentLevel() / borderClosedLevel <= transform.localScale.x && transform.localScale != Vector3.zero)
             Shrink();
 
-/*        if (playerDetected && !borderDamageActive)
+        if (playerDetected && !borderDamageActive)
         {
             damageCoroutine = StartCoroutine(OutOfBorderDamage());
-        }*/
+        }
     }
 
-/*    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
@@ -55,7 +53,7 @@ public class StormBorderManager : MonoBehaviour
         {
             playerDetected = false;
         }
-    }*/
+    }
 
     IEnumerator OutOfBorderDamage()
     {
