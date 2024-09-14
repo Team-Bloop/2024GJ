@@ -1,80 +1,105 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MiniStormSpawner : MonoBehaviour
 {
-    [SerializeField] Transform borderStormTransform;
-    [SerializeField] Transform borderStormMaskTransform;
+    [SerializeField] Grid grid;
+    [SerializeField] Tilemap worldBorder;
+
     [SerializeField] GameObject stormPrefab;
     [SerializeField] List<Sprite> StormSpritesList = new List<Sprite>();
 
     [SerializeField] GameObject player;
-    [SerializeField] bool TriggerStorms = false;
-
     Transform playerTransform;
+    PlayerManager playerManager;
+
+    [SerializeField] float spawnRate;
+    [Tooltip("how many multiplied by player level")]
+    [SerializeField] float spawnRatio;
+    [SerializeField] float stormSizeRatio;
+    [SerializeField] bool triggerStorms;
+
+    int[] posNeg = { -1, 1 };
 
     private void Start()
     {
         playerTransform = player.transform;
+        playerManager = player.GetComponent<PlayerManager>();
     }
 
     private void Update()
     {
-        if (TriggerStorms)
+        if (triggerStorms)
             StartStorms();
     }
 
     public void StartStorms()
     {
-        if (borderStormTransform.localScale.x <= 0.01f)
-        {
-            return;
-        }
         StartCoroutine(GenerateStorm());
-        TriggerStorms = false;
+        triggerStorms = false;
     }
 
     IEnumerator GenerateStorm()
     {
         while(true)
         {
-            if (borderStormTransform.localScale.x <= 0.01f)
+            int quantity = (int) Mathf.RoundToInt(spawnRatio * playerManager.GetCurrentLevel());
+            for (int i = 0; i < spawnRatio * playerManager.GetCurrentLevel(); i++)
             {
-                yield return null;
+                Vector3 newScale = GenerateStormScale();
+                Vector3 location = GenerateLocation(newScale.x);
+                GameObject newObject = Instantiate(stormPrefab, location, Quaternion.identity);
+                newObject.transform.localScale = newScale;
+                newObject.GetComponent<MiniStorm>().Player = player;
+                SpriteRenderer newObjectSprite = newObject.GetComponent<SpriteRenderer>();
+
+                int x = Random.Range(0, 2);
+                int randomSprite = Random.Range(0, StormSpritesList.Count);
+
+                newObjectSprite.flipX = x == 0 ? false : true;
+                newObjectSprite.sprite = StormSpritesList[randomSprite];
             }
-            Vector3 location = GenerateLocation();
-            GameObject newObject = Instantiate(stormPrefab, location, Quaternion.identity);
-            newObject.GetComponent<MiniStorm>().Player = player;
-            SpriteRenderer newObjectSprite = newObject.GetComponent<SpriteRenderer>();
 
-            int x = Random.Range(0, 2);
-            int randomSprite = Random.Range(0, StormSpritesList.Count);
-
-            newObjectSprite.flipX = x == 0 ? false : true;
-            newObjectSprite.sprite = StormSpritesList[randomSprite];
-
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(spawnRate);
         }
     }
 
-    Vector3 GenerateLocation()
+    Vector3 GenerateStormScale()
     {
-        float xRange = (borderStormTransform.localScale.x / 2 * borderStormMaskTransform.localScale.x) - 0.5f;
-        float yRange = (borderStormTransform.localScale.y / 2 * borderStormMaskTransform.localScale.y) - 0.5f;
-        float zRange = (borderStormTransform.localScale.z / 2 * borderStormMaskTransform.localScale.z) - 0.5f;
+        float randomScale = Random.Range(1, stormSizeRatio * playerManager.GetCurrentLevel());
+        return Vector3.one * randomScale;
+    }
 
-        while (true)
+    Vector3 GenerateLocation(float distance)
+    {
+        float xRangeMin = (worldBorder.cellBounds.min.x * grid.cellSize.x) + distance;
+        float xRangeMax = (worldBorder.cellBounds.max.x * grid.cellSize.x) + distance;
+
+        float yRangeMin = (worldBorder.cellBounds.min.y * grid.cellSize.x) + distance;
+        float yRangeMax = (worldBorder.cellBounds.max.y * grid.cellSize.x) + distance;
+
+        float xRange = Random.Range(xRangeMin, xRangeMax);
+        float yRange = Random.Range(yRangeMin, yRangeMax);
+
+        if (Mathf.Abs(playerTransform.position.x - xRange) < distance && Mathf.Abs(playerTransform.position.y - yRange) < distance)
         {
-            xRange = Random.Range(-xRange, xRange);
-            yRange = Random.Range(-yRange, yRange);
-            zRange = Random.Range(-zRange, zRange);
+            int posNegX;
+            int posNegY;
+            if (playerTransform.position.x >= xRange)
+                posNegX = 0;
+            else
+                posNegX = 1;
 
-            if (Mathf.Abs(playerTransform.position.x - xRange) < 1 && Mathf.Abs(playerTransform.position.y - yRange) < 1 && Mathf.Abs(playerTransform.position.z - zRange) < 1)
-                continue;
-            break;
+            if (playerTransform.position.y >= yRange)
+                posNegY = 0;
+            else
+                posNegY = 1;
+
+            return new Vector3(xRange + (distance * posNeg[posNegX]), yRange + (distance * posNeg[posNegY]));
         }
 
-        return new Vector3(xRange, yRange, zRange);
+        return new Vector3(xRange, yRange, 0);
     }
 }

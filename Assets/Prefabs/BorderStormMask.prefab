@@ -81,9 +81,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b55fb5f05ded4604099c5e0b600eddf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShrinkRate: 0.01
-  BorderDamageValue: 1
-  BorderDamageRate: 2
+  player: {fileID: 0}
+  playerManager: {fileID: 0}
+  stormWarning: {fileID: 0}
+  shrinkRate: 0.03
+  borderDamageValue: 5
+  borderDamageRate: 5
+  borderClosedLevel: 30
 --- !u!331 &5346591384722099043
 SpriteMask:
   m_ObjectHideFlags: 0
@@ -193,7 +197,10 @@ MonoBehaviour:
   - {fileID: 2002204931, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
   - {fileID: -1418365017, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
   - {fileID: 1217559658, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
-  playerTransform: {fileID: 0}
+  player: {fileID: 0}
+  SpawnRate: 1
+  stormSizeRatio: 1
+  stormSpeedRatio: 1
   TriggerStorms: 1
 --- !u!1 &6110097165782851656
 GameObject:
@@ -222,7 +229,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_LocalScale: {x: 125, y: 125, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3436762579197123260}
@@ -271,7 +278,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.23137255, g: 0.34509805, b: 0.6509804, a: 0.5254902}
+  m_Color: {r: 0.23137255, g: 0.34509805, b: 0.6509804, a: 0.39215687}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

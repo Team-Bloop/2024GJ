@@ -16,7 +16,8 @@ public class HealOrb : OrbBase
     protected override void OnCollected(Collider2D collision)
     {
         PlayerManager player = collision.GetComponent<PlayerManager>();
-        Debug.Log(player.Damage(-heal));
+        //Debug.Log(player.Damage(-heal));
+        player.Damage(-heal);
         base.OnCollected(collision);
     }
 }

@@ -5,10 +5,11 @@ using UnityEngine;
 public class StormBorderManager : MonoBehaviour
 {
     [SerializeField]
+    GameObject player;
     PlayerManager playerManager;
 
-    [SerializeField]
-    StormWarning stormWarning;
+/*    [SerializeField]
+    StormWarning stormWarning;*/
 
     [SerializeField]
     float shrinkRate = 0.01f;
@@ -16,15 +17,20 @@ public class StormBorderManager : MonoBehaviour
     float borderDamageValue = 1;
     [SerializeField]
     float borderDamageRate = 2f;
+    [SerializeField]
+    float borderClosedLevel = 30;
 
-    bool playerDetected = true;
+    bool playerDetected = false;
+    Coroutine damageCoroutine;
     bool borderDamageActive = false;
 
-    Coroutine damageCoroutine;
-
+    private void Start()
+    {
+        playerManager = player.GetComponent<PlayerManager>();
+    }
     private void Update()
     {
-        if (playerManager.GetCurrentLevel() > 2)
+        if (1f - playerManager.GetCurrentLevel() / borderClosedLevel <= transform.localScale.x && transform.localScale != Vector3.zero)
             Shrink();
 
         if (playerDetected && !borderDamageActive)
@@ -43,7 +49,7 @@ public class StormBorderManager : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
@@ -56,7 +62,7 @@ public class StormBorderManager : MonoBehaviour
         borderDamageActive = true;
         while (playerDetected)
         {
-            Debug.Log("Player Damaged by Mini Storm");
+            Debug.Log("Player Damaged by Border Storm");
             playerManager.Damage(borderDamageValue);
             yield return new WaitForSeconds(borderDamageRate);
         }
@@ -65,14 +71,26 @@ public class StormBorderManager : MonoBehaviour
 
     /// <summary>
     /// Shrinks the border bit by bit and activates warning flash when at at scale 0.2
+    /// basically 20% of size before game starts
     /// </summary>
     public void Shrink()
     {
-        if (transform.localScale.x > 0.001f)
+        if (this.GetComponent<Renderer>().bounds.size.x > 2)
+        {
             transform.localScale -= transform.localScale * shrinkRate * Time.deltaTime;
-        if (transform.localScale.x < 0.2)
+        }
+        else
+        {
+            playerDetected = true;
+            StartCoroutine(OutOfBorderDamage());
+            transform.localScale = Vector3.zero;
+        }
+
+        //Debug.Log("Border size: " + this.GetComponent<Renderer>().bounds.size);
+
+        /*if (transform.localScale.x < 0.2)
             stormWarning.FlashSwitch(true);
         else
-            stormWarning.FlashSwitch(false);
+            stormWarning.FlashSwitch(false);*/
     }
 }

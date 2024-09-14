@@ -28,6 +28,7 @@ public class PlayerManager : MonoBehaviour
     private int level; // at the moment each level will only require 20 exp
     private int charges;
     private int maxExpPerLevel = 20;
+    private int stormDestroyCount = 0;
 
     [SerializeField]
     private GameObject HP_UI;
@@ -182,13 +183,18 @@ public class PlayerManager : MonoBehaviour
 
     public float GetEXPPercentage() {
         float currentlvlExp = exp % maxExpPerLevel;
-        Debug.Log($"LEVEL EXP: " + currentlvlExp);
+        //Debug.Log($"LEVEL EXP: " + currentlvlExp);
         return currentlvlExp / maxExpPerLevel;
     }
 
     public int GetCurrentLevel() {
         level = exp / maxExpPerLevel + 1;
         return level;
+    }
+
+    public void IncrementStormCount()
+    {
+        stormDestroyCount++;
     }
 
     // Use negative to decrease charges
