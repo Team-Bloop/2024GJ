@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using GeneralUtility;
 using UI;
+using TMPro;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class PlayerManager : MonoBehaviour
     private const int MAX_CHARGES = 8;
     private const float MAX_COLLECT_SPEED = 0.8f;
 
+    [SerializeField] 
+    TextMeshProUGUI scoreText;
     [SerializeField]
     [Min(MIN_MAX_HEALTH)]
     private float maxHealth;
@@ -28,7 +31,9 @@ public class PlayerManager : MonoBehaviour
     private int level; // at the moment each level will only require 20 exp
     private int charges;
     private int maxExpPerLevel = 20;
+    private int score = 0;
     private int stormDestroyCount = 0;
+
 
     [SerializeField]
     private GameObject HP_UI;
@@ -41,6 +46,7 @@ public class PlayerManager : MonoBehaviour
     {
         AudioManager.PlayMainBGM(0);
         currentHealth = maxHealth;
+        scoreText.text = "Score: " + score;
         collectSpeed = 0f;
         exp = 0;
     }
@@ -194,6 +200,8 @@ public class PlayerManager : MonoBehaviour
 
     public void IncrementStormCount()
     {
+        score += GetCurrentLevel();
+        scoreText.text = "Score: " + score;
         stormDestroyCount++;
     }
 
