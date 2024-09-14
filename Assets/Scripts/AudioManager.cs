@@ -71,7 +71,9 @@ public class AudioManager : MonoBehaviour
         if (bgmFade == true) {
             BGMFade();
         } else {
-            BGMUnfade();
+            if (bgmAudioSource.volume < (masterVolume * bgmVolume)) {
+                bgmAudioSource.volume += bgmFadeValue;
+            }
         }
     }
 
@@ -140,12 +142,12 @@ public class AudioManager : MonoBehaviour
             instance.bgmAudioSource.volume -= instance.bgmFadeValue;
         }
     }
-    private static void BGMUnfade()
-    {
-        if (instance.bgmAudioSource.volume < (instance.masterVolume * instance.bgmVolume)) {
-            instance.bgmAudioSource.volume += instance.bgmFadeValue;
-        }
-    }
+    //private static void BGMUnfade()
+    //{
+    //    if (instance.bgmAudioSource.volume < (instance.masterVolume * instance.bgmVolume)) {
+    //        instance.bgmAudioSource.volume += instance.bgmFadeValue;
+    //    }
+    //}
     
     // For SFX on a trigger
     public static void PlaySound(SoundType sound)
