@@ -197,4 +197,5 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 0, g: 1, b: 0, a: 1}
   damage: 10
+  explosionForce: 1000
   warningTimeRatio: 0.5
