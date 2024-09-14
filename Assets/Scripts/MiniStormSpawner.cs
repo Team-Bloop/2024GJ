@@ -5,28 +5,37 @@ using UnityEngine.Tilemaps;
 
 public class MiniStormSpawner : MonoBehaviour
 {
-    [SerializeField] Grid grid;
-    [SerializeField] Tilemap worldBorder;
+    Grid grid;
+    Tilemap worldBorder;
 
-    [SerializeField] GameObject stormPrefab;
-    [SerializeField] List<Sprite> StormSpritesList = new List<Sprite>();
+    [SerializeField]
+    GameObject stormPrefab;
+    [SerializeField]
+    List<Sprite> StormSpritesList = new List<Sprite>();
 
-    [SerializeField] GameObject player;
+    GameObject player;
+
     Transform playerTransform;
     PlayerManager playerManager;
 
-    [SerializeField] float spawnRate;
-    [Tooltip("how many multiplied by player level")]
-    [SerializeField] float spawnRatio;
-    [SerializeField] float stormSizeRatio;
-    [SerializeField] bool triggerStorms;
-
+    [SerializeField] 
+    float spawnRate;
+    [SerializeField] 
+    float spawnRatio;
+    [SerializeField] 
+    float stormSizeRatio;
+    
+    bool triggerStorms = true;
     int[] posNeg = { -1, 1 };
 
     private void Start()
     {
+        player = GameObject.Find("Player");
         playerTransform = player.transform;
         playerManager = player.GetComponent<PlayerManager>();
+
+        grid = GameObject.Find("Grid").GetComponent<Grid>();
+        worldBorder = GameObject.Find("WorldBorder").GetComponent<Tilemap>();
     }
 
     private void Update()
