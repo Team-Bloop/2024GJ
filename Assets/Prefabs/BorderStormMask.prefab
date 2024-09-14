@@ -81,9 +81,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b55fb5f05ded4604099c5e0b600eddf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerManager: {fileID: 0}
-  stormWarning: {fileID: 0}
   shrinkRate: 0.03
   borderDamageValue: 5
   borderDamageRate: 5
@@ -183,25 +180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785649ea361706f4094987749520f184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  borderStormTransform: {fileID: 3436762579197123260}
-  borderStormMaskTransform: {fileID: 333445524369468450}
-  stormPrefab: {fileID: 2481557183308531690, guid: dd4fcfa4eed27b4499e954cd0c0c0c71, type: 3}
-  StormSpritesList:
-  - {fileID: 1003640858, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
-  - {fileID: -1620855080, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
-  - {fileID: -1233457878, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
-  - {fileID: -1687556462, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
-  - {fileID: 308916116, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
-  - {fileID: -550565691, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
-  - {fileID: -2129016610, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
-  - {fileID: 2002204931, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
-  - {fileID: -1418365017, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
-  - {fileID: 1217559658, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
-  player: {fileID: 0}
-  SpawnRate: 1
-  stormSizeRatio: 1
-  stormSpeedRatio: 1
-  TriggerStorms: 1
+  stormPrefab: {fileID: 2481557183308531690, guid: 5de1f0cc4e01b3b4a8d3602aec2d3db4, type: 3}
+  spawnRate: 5
+  spawnRatio: 0.2
+  stormSizeRatio: 0.1
 --- !u!1 &6110097165782851656
 GameObject:
   m_ObjectHideFlags: 0
