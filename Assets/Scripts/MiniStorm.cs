@@ -24,11 +24,13 @@ public class MiniStorm : MonoBehaviour
 /*    [SerializeField]
     private int minChaseLevel = 2;*/
     [SerializeField]
-    private float chaseRate = 0.5f;
+    private float chaseRate = 0.1f;
+    [SerializeField]
+    private float maxSpeed = 2f;
 
     public SpriteRenderer SelectedIndicator;
 
-    public GameObject Player;
+    private GameObject player;
     PlayerManager playerManager;
 
     bool playerDetected = false;
@@ -42,7 +44,7 @@ public class MiniStorm : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject == Player)
+        if (collision.gameObject == player)
         {
             if (stormDamage != null)
                 StopCoroutine(stormDamage);
@@ -53,7 +55,7 @@ public class MiniStorm : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject == Player)
+        if (collision.gameObject == player)
         {
             playerDetected = true;
         }
@@ -61,7 +63,8 @@ public class MiniStorm : MonoBehaviour
 
     private void Start()
     {
-        playerManager = Player.GetComponent<PlayerManager>();
+        player = GameObject.Find("Player");
+        playerManager = player.GetComponent<PlayerManager>();
 
         currentScale = transform.localScale;
         shrinkScale = currentScale * pulseRange;
@@ -187,9 +190,10 @@ public class MiniStorm : MonoBehaviour
 
     private void ChasePlayer()
     {
-        float distance = Vector3.Distance(transform.position, Player.transform.position);
+        float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance < 0.01f)
             return;
-        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, chaseRate * playerManager.GetCurrentLevel() * Time.deltaTime);
+        float speed = chaseRate * playerManager.GetCurrentLevel();
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, chaseRate * playerManager.GetCurrentLevel() * Time.deltaTime);
     }
 }

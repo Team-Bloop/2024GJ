@@ -22021,22 +22021,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2629362640297280234, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1545921226}
-    - target: {fileID: 2629362640297280234, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
-      propertyPath: stormWarning
-      value: 
-      objectReference: {fileID: 1811854507}
-    - target: {fileID: 2629362640297280234, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
-      propertyPath: playerManager
-      value: 
-      objectReference: {fileID: 1545921228}
-    - target: {fileID: 5545649110459428271, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1545921226}
     - target: {fileID: 6110097165782851656, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
       propertyPath: m_Name
       value: BorderStormMask
@@ -28017,17 +28001,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1811854507 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8682491972403626028, guid: 61561e1d909465c4fbfcea08a8dc245b, type: 3}
-  m_PrefabInstance: {fileID: 1716452913}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc3531cbd4fe6474ba07c987fc972339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1841633308 stripped
