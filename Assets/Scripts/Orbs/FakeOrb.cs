@@ -15,6 +15,10 @@ public class FakeOrb : OrbBase
     private float damage;
 
     [SerializeField]
+    [Min(0.1f)]
+    private float explosionForce;
+
+    [SerializeField]
     [Tooltip("Percentage of time spent faking vs warning color transition during OnTriggerStay2D")]
     [Range(0, 1)]
     private float warningTimeRatio;
@@ -25,6 +29,9 @@ public class FakeOrb : OrbBase
     private float totalTime;
     private float currentWarningTime;
     private bool isWarning;
+
+    private Rigidbody2D rb;
+    private GameObject playerGameObject;
 
     protected FakeOrb() : base(false) { }
 
@@ -45,12 +52,22 @@ public class FakeOrb : OrbBase
         fakeTimeRatio = 1 - warningTimeRatio;
         currentWarningTime = 0f;
         isWarning = false;
+
+        rb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
+        playerGameObject = GameObject.FindGameObjectWithTag("Player");
+        enabled = false;
     }
 
     private void Reset()
     {
         damage = 10f;
         warningTimeRatio = 0.5f;
+        explosionForce = 1000f;
+    }
+
+    private void FixedUpdate()
+    {
+        rb.AddForce((playerGameObject.transform.position - transform.position).normalized * explosionForce);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -98,6 +115,7 @@ public class FakeOrb : OrbBase
     {
         PlayerManager player = collision.GetComponent<PlayerManager>();
         player.Damage(damage);
+        enabled = true;
         base.OnCollected(collision);
     }
 

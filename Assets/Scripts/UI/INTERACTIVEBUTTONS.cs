@@ -43,6 +43,6 @@ public class INTERACTIVEBUTTONS : MonoBehaviour
     }
     public void StartGame() {
         Time.timeScale = 1;
-        SceneManager.LoadScene("MASTER_SCENE");
+        SceneManager.LoadScene("Peanut_Scene");
     }
 }
