@@ -47,7 +47,7 @@ public class OrbBase : MonoBehaviour
         transform = GetComponent<Transform>();
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         if (isDying)
         {

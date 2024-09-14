@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using GeneralUtility;
+using System.Collections;
 
 public class FakeOrb : OrbBase
 {
@@ -53,8 +54,8 @@ public class FakeOrb : OrbBase
         currentWarningTime = 0f;
         isWarning = false;
 
-        rb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
         playerGameObject = GameObject.FindGameObjectWithTag("Player");
+        rb = playerGameObject.GetComponent<Rigidbody2D>();
         enabled = false;
     }
 
