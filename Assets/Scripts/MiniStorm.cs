@@ -25,15 +25,14 @@ public class MiniStorm : MonoBehaviour
     private int minChaseLevel = 2;*/
     [SerializeField]
     private float chaseRate = 0.5f;
-    float speedMultiplier = 1;
 
     public SpriteRenderer SelectedIndicator;
-    public GameObject Player;
 
-    Coroutine stormDamage;
+    public GameObject Player;
     PlayerManager playerManager;
 
     bool playerDetected = false;
+    Coroutine stormDamage;
     bool stormDamageActive = false;
 
     bool shrinking = true;
@@ -191,6 +190,6 @@ public class MiniStorm : MonoBehaviour
         float distance = Vector3.Distance(transform.position, Player.transform.position);
         if (distance < 0.01f)
             return;
-        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, chaseRate * speedMultiplier * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, chaseRate * playerManager.GetCurrentLevel() * Time.deltaTime);
     }
 }

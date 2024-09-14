@@ -84,7 +84,7 @@ MonoBehaviour:
   player: {fileID: 0}
   playerManager: {fileID: 0}
   stormWarning: {fileID: 0}
-  shrinkRate: 0.1
+  shrinkRate: 0.03
   borderDamageValue: 5
   borderDamageRate: 5
   borderClosedLevel: 30
@@ -198,6 +198,9 @@ MonoBehaviour:
   - {fileID: -1418365017, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
   - {fileID: 1217559658, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
   player: {fileID: 0}
+  SpawnRate: 1
+  stormSizeRatio: 1
+  stormSpeedRatio: 1
   TriggerStorms: 1
 --- !u!1 &6110097165782851656
 GameObject:

@@ -6,7 +6,6 @@ public class StormBorderManager : MonoBehaviour
 {
     [SerializeField]
     GameObject player;
-    [SerializeField]
     PlayerManager playerManager;
 
     [SerializeField]
@@ -22,10 +21,13 @@ public class StormBorderManager : MonoBehaviour
     float borderClosedLevel = 30;
 
     bool playerDetected = false;
+    Coroutine damageCoroutine;
     bool borderDamageActive = false;
 
-    Coroutine damageCoroutine;
-
+    private void Start()
+    {
+        playerManager = player.GetComponent<PlayerManager>();
+    }
     private void Update()
     {
         if (1f - playerManager.GetCurrentLevel() / borderClosedLevel <= transform.localScale.x && transform.localScale != Vector3.zero)
