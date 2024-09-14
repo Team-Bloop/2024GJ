@@ -21983,18 +21983,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 333445524369468450, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 125
-      objectReference: {fileID: 0}
-    - target: {fileID: 333445524369468450, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 125
-      objectReference: {fileID: 0}
-    - target: {fileID: 333445524369468450, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 333445524369468450, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -22034,14 +22022,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 333445524369468450, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2629362640297280234, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
-      propertyPath: shrinkRate
-      value: 0.03
-      objectReference: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1545921226}
     - target: {fileID: 2629362640297280234, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
       propertyPath: stormWarning
       value: 
@@ -22057,10 +22041,6 @@ PrefabInstance:
     - target: {fileID: 6110097165782851656, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
       propertyPath: m_Name
       value: BorderStormMask
-      objectReference: {fileID: 0}
-    - target: {fileID: 6110097165782851656, guid: 43eb378df279c2a4e9d87b89cec7a63b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

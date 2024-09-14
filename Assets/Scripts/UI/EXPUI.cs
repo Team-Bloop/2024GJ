@@ -41,7 +41,7 @@ namespace UI {
             float increaseValue = percentage * expRectTransform.rect.width;
             Vector3 checkVector = originalPosition + Vector3.right * increaseValue;
             if (checkVector.x < originalPositionX + expRectTransform.rect.width) {
-                Debug.Log($"CURRENT EXP AT: {percentage * 100}%");
+                //Debug.Log($"CURRENT EXP AT: {percentage * 100}%");
                 increaseValue = percentage * expRectTransform.rect.width;
                 expRectTransform.localPosition = originalPosition + Vector3.right * increaseValue;
             }

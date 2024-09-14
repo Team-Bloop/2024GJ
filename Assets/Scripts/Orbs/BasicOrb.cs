@@ -23,8 +23,10 @@ public class BasicOrb : OrbBase
     protected override void OnCollected(Collider2D collision)
     {
         PlayerManager player = collision.GetComponent<PlayerManager>();
-        Debug.Log(player.IncreaseEXP(exp));
-        Debug.Log($"Current Charge: {player.IncreaseCharges(charge)}");
+        /*Debug.Log(player.IncreaseEXP(exp));
+        Debug.Log($"Current Charge: {player.IncreaseCharges(charge)}");*/
+        player.IncreaseEXP(exp);
+        player.IncreaseCharges(charge);
         base.OnCollected(collision);
     }
 }

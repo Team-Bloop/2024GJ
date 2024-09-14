@@ -6,7 +6,7 @@ using UnityEngine;
 public class StormDetect : MonoBehaviour
 {
     private List<GameObject> DetectedStorms = new List<GameObject>();
-    public GameObject SelectedStorm;
+    public GameObject SelectedStorm { get; private set; }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -174,7 +174,7 @@ public class OrbSpawner : MonoBehaviour
             Vector2 location = new Vector2(x, y);
             bool canSpawn = true;
 
-            Physics2D.OverlapBox(location, Vector2.one, 0f, new ContactFilter2D().NoFilter(), results);
+            Physics2D.OverlapBox(location, Vector2.one * 1.1f, 0f, new ContactFilter2D().NoFilter(), results);
 
             foreach (Collider2D item in results)
             {
