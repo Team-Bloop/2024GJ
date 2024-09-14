@@ -182,7 +182,7 @@ public class PlayerManager : MonoBehaviour
 
     public float GetEXPPercentage() {
         float currentlvlExp = exp % maxExpPerLevel;
-        Debug.Log($"LEVEL EXP: " + currentlvlExp);
+        //Debug.Log($"LEVEL EXP: " + currentlvlExp);
         return currentlvlExp / maxExpPerLevel;
     }
 

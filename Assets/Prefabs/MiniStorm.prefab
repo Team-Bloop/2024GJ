@@ -141,8 +141,8 @@ MonoBehaviour:
   pulseRange: 0.8
   pulseRate: 2
   pulsing: 1
-  minChaseLevel: 2
-  chaseRate: 0.1
+  minChaseLevel: 1
+  chaseRate: 0.2
   SelectedIndicator: {fileID: 3551648277271768243}
   Player: {fileID: 0}
 --- !u!1 &8681311073244390187

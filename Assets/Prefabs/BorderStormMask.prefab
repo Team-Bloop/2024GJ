@@ -81,9 +81,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b55fb5f05ded4604099c5e0b600eddf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShrinkRate: 0.01
-  BorderDamageValue: 1
-  BorderDamageRate: 2
+  playerManager: {fileID: 0}
+  stormWarning: {fileID: 0}
+  shrinkRate: 0.002
+  borderDamageValue: 30
+  borderDamageRate: 2
 --- !u!331 &5346591384722099043
 SpriteMask:
   m_ObjectHideFlags: 0
@@ -193,7 +195,7 @@ MonoBehaviour:
   - {fileID: 2002204931, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
   - {fileID: -1418365017, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
   - {fileID: 1217559658, guid: ac9b6aa1c9ba3ef4890522efcb7c2986, type: 3}
-  playerTransform: {fileID: 0}
+  player: {fileID: 0}
   TriggerStorms: 1
 --- !u!1 &6110097165782851656
 GameObject:

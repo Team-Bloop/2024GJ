@@ -13,6 +13,7 @@ public class MiniStormSpawner : MonoBehaviour
     [SerializeField] bool TriggerStorms = false;
 
     Transform playerTransform;
+    float stormSpawnMargin = 5f;
 
     private void Start()
     {
@@ -39,10 +40,6 @@ public class MiniStormSpawner : MonoBehaviour
     {
         while(true)
         {
-            if (borderStormTransform.localScale.x <= 0.01f)
-            {
-                yield return null;
-            }
             Vector3 location = GenerateLocation();
             GameObject newObject = Instantiate(stormPrefab, location, Quaternion.identity);
             newObject.GetComponent<MiniStorm>().Player = player;
@@ -60,21 +57,19 @@ public class MiniStormSpawner : MonoBehaviour
 
     Vector3 GenerateLocation()
     {
-        float xRange = (borderStormTransform.localScale.x / 2 * borderStormMaskTransform.localScale.x) - 0.5f;
-        float yRange = (borderStormTransform.localScale.y / 2 * borderStormMaskTransform.localScale.y) - 0.5f;
-        float zRange = (borderStormTransform.localScale.z / 2 * borderStormMaskTransform.localScale.z) - 0.5f;
+        float xRange = (borderStormTransform.localScale.x / 2 * borderStormMaskTransform.localScale.x) - 0.5f + stormSpawnMargin;
+        float yRange = (borderStormTransform.localScale.y / 2 * borderStormMaskTransform.localScale.y) - 0.5f + stormSpawnMargin;
+        float zRange = (borderStormTransform.localScale.z / 2 * borderStormMaskTransform.localScale.z) - 0.5f + stormSpawnMargin;
 
-        while (true)
-        {
-            xRange = Random.Range(-xRange, xRange);
-            yRange = Random.Range(-yRange, yRange);
-            zRange = Random.Range(-zRange, zRange);
+        xRange = Random.Range(-xRange, xRange) + borderStormTransform.position.x;
+        yRange = Random.Range(-yRange, yRange) + borderStormTransform.position.y;
+        zRange = Random.Range(-zRange, zRange) + borderStormTransform.position.z;
 
-            if (Mathf.Abs(playerTransform.position.x - xRange) < 1 && Mathf.Abs(playerTransform.position.y - yRange) < 1 && Mathf.Abs(playerTransform.position.z - zRange) < 1)
-                continue;
-            break;
-        }
+        if (Mathf.Abs(playerTransform.position.x - xRange) < stormSpawnMargin && Mathf.Abs(playerTransform.position.y - yRange) < stormSpawnMargin && Mathf.Abs(playerTransform.position.z - zRange) < stormSpawnMargin)
+            return new Vector3(xRange + stormSpawnMargin, yRange + stormSpawnMargin, zRange + stormSpawnMargin);
 
         return new Vector3(xRange, yRange, zRange);
     }
+
+    
 }
