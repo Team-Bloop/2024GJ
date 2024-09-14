@@ -10,8 +10,8 @@ public class MiniStormSpawner : MonoBehaviour
 
     [SerializeField]
     GameObject stormPrefab;
-    [SerializeField]
-    List<Sprite> StormSpritesList = new List<Sprite>();
+    /*[SerializeField]
+    List<Sprite> StormSpritesList = new List<Sprite>();*/
 
     GameObject player;
 
@@ -61,14 +61,13 @@ public class MiniStormSpawner : MonoBehaviour
                 Vector3 location = GenerateLocation(newScale.x);
                 GameObject newObject = Instantiate(stormPrefab, location, Quaternion.identity);
                 newObject.transform.localScale = newScale;
-                newObject.GetComponent<MiniStorm>().Player = player;
-                SpriteRenderer newObjectSprite = newObject.GetComponent<SpriteRenderer>();
+                //SpriteRenderer newObjectSprite = newObject.GetComponent<SpriteRenderer>();
 
-                int x = Random.Range(0, 2);
+                /*int x = Random.Range(0, 2);
                 int randomSprite = Random.Range(0, StormSpritesList.Count);
 
                 newObjectSprite.flipX = x == 0 ? false : true;
-                newObjectSprite.sprite = StormSpritesList[randomSprite];
+                newObjectSprite.sprite = StormSpritesList[randomSprite];*/
             }
 
             yield return new WaitForSeconds(spawnRate);
