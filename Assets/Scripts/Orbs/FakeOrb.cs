@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using GeneralUtility;
+using System.Collections;
 
 public class FakeOrb : OrbBase
 {
@@ -23,12 +24,23 @@ public class FakeOrb : OrbBase
     [Range(0, 1)]
     private float warningTimeRatio;
 
+    [SerializeField]
+    [Tooltip("Time in seconds before orb returns to a fake color")]
+    [Min(0f)]
+    private float pauseBeforeRevert;
+
+    [SerializeField]
+    [Tooltip("Time in seconds to revert to a fake color")]
+    [Min(0f)]
+    private float timeToRevert;
+
     private float fakeTimeRatio;
     private float fakeTime;
     private float warningTime;
     private float totalTime;
     private float currentWarningTime;
     private bool isWarning;
+    private bool canRevert;
 
     private Rigidbody2D rb;
     private GameObject playerGameObject;
@@ -53,9 +65,10 @@ public class FakeOrb : OrbBase
         currentWarningTime = 0f;
         isWarning = false;
 
-        rb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
         playerGameObject = GameObject.FindGameObjectWithTag("Player");
+        rb = playerGameObject.GetComponent<Rigidbody2D>();
         enabled = false;
+        canRevert = false;
     }
 
     private void Reset()
@@ -63,11 +76,27 @@ public class FakeOrb : OrbBase
         damage = 10f;
         warningTimeRatio = 0.5f;
         explosionForce = 1000f;
+        pauseBeforeRevert = 0.5f;
+        timeToRevert = 0.5f;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (canRevert && !GetComponent<Renderer>().isVisible) 
+        {
+            Debug.Log("asdjkaosdjlkas");
+            enabled = false;
+            canRevert = false;
+        }
     }
 
     private void FixedUpdate()
     {
-        rb.AddForce((playerGameObject.transform.position - transform.position).normalized * explosionForce);
+        if (!canRevert)
+        {
+            rb.AddForce((playerGameObject.transform.position - transform.position).normalized * explosionForce);
+        }
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -77,6 +106,7 @@ public class FakeOrb : OrbBase
             return;
         }
 
+        canRevert = false;
         PlayerManager player = collision.GetComponent<PlayerManager>();
         fakeTime = (1 - player.CollectSpeed) * InitialTimeToCollect * fakeTimeRatio;
         warningTime = (1 - player.CollectSpeed) * InitialTimeToCollect * warningTimeRatio;
@@ -111,11 +141,18 @@ public class FakeOrb : OrbBase
         }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        enabled = true;
+        canRevert = true;
+    }
+
     protected override void OnCollected(Collider2D collision)
     {
         PlayerManager player = collision.GetComponent<PlayerManager>();
         player.Damage(damage);
         enabled = true;
+        canRevert = false;
         base.OnCollected(collision);
     }
 
