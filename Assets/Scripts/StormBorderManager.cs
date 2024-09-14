@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class StormBorderManager : MonoBehaviour
 {
-    [SerializeField]
     GameObject player;
     PlayerManager playerManager;
-
-/*    [SerializeField]
-    StormWarning stormWarning;*/
 
     [SerializeField]
     float shrinkRate = 0.01f;
@@ -26,6 +22,7 @@ public class StormBorderManager : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.Find("Player");
         playerManager = player.GetComponent<PlayerManager>();
     }
     private void Update()
