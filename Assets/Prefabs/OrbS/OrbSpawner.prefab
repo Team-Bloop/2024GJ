@@ -101,7 +101,7 @@ MonoBehaviour:
   - orbPrefab: {fileID: 8071669109584515768, guid: 3875566e4f679a640bde7fbaf7504ee3, type: 3}
     orbChance: 1
   - orbPrefab: {fileID: 1675394941725844052, guid: e24360038d5ca4946a13124000d1ba9d, type: 3}
-    orbChance: 2
+    orbChance: 1
   initialOrbSpawn: 5
   maxOrbSpawn: 50
   spawnRate: 2

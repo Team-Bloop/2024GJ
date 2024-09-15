@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using GeneralUtility;
-using static UnityEditor.Progress;
 
 [Serializable]
 // Helper class for OrbSpawner

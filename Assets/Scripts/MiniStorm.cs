@@ -11,7 +11,7 @@ public class MiniStorm : MonoBehaviour
     private float stormDamageRate = 1f;
 
     [SerializeField]
-    private float sizeLimit = 100;
+    private float sizeLimit = 30;
     [SerializeField]
     private float expandRate = 0.01f;
     [SerializeField]
@@ -122,11 +122,6 @@ public class MiniStorm : MonoBehaviour
         currentScale = newSize;
     }
 
-    public void SpeedMultiplier(float multiplier)
-    {
-        
-    }
-
     /// <summary>
     /// Makes the storm pulse in size, the
     ///     - frequency can be adjusted based on PulseRate
@@ -180,6 +175,7 @@ public class MiniStorm : MonoBehaviour
     {
         if (stormDamage != null)
             StopCoroutine(stormDamage);
+        MiniStormSpawner.StormCount--;
         Destroy(this.gameObject);
     }
 
@@ -194,6 +190,10 @@ public class MiniStorm : MonoBehaviour
         if (distance < 0.01f)
             return;
         float speed = chaseRate * playerManager.GetCurrentLevel();
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, chaseRate * playerManager.GetCurrentLevel() * Time.deltaTime);
+        if (speed > maxSpeed)
+        {
+            speed = maxSpeed;
+        }
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
     }
 }

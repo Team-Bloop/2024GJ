@@ -200,7 +200,13 @@ public class PlayerManager : MonoBehaviour
 
     public void IncrementStormCount()
     {
-        score += GetCurrentLevel();
+        IncreaseScore(GetCurrentLevel());
+        stormDestroyCount++;
+    }
+
+    public void IncreaseScore(int value)
+    {
+        score += value;
         scoreText.text = "Score: " + score;
         stormDestroyCount++;
     }
