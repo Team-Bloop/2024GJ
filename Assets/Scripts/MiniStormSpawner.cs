@@ -24,7 +24,13 @@ public class MiniStormSpawner : MonoBehaviour
     float spawnRatio;
     [SerializeField] 
     float stormSizeRatio;
-    
+    [SerializeField]
+    float maxStormSize = 30;
+    [SerializeField]
+    int maxStormQuantity = 30;
+
+    public static int StormCount = 0;
+
     bool triggerStorms = true;
     int[] posNeg = { -1, 1 };
 
@@ -57,10 +63,13 @@ public class MiniStormSpawner : MonoBehaviour
             int quantity = (int) Mathf.RoundToInt(spawnRatio * playerManager.GetCurrentLevel());
             for (int i = 0; i < spawnRatio * playerManager.GetCurrentLevel(); i++)
             {
+                if (StormCount >= maxStormQuantity)
+                    break;
                 Vector3 newScale = GenerateStormScale();
                 Vector3 location = GenerateLocation(newScale.x);
                 GameObject newObject = Instantiate(stormPrefab, location, Quaternion.identity);
                 newObject.transform.localScale = newScale;
+                StormCount++;
                 //SpriteRenderer newObjectSprite = newObject.GetComponent<SpriteRenderer>();
 
                 /*int x = Random.Range(0, 2);
@@ -76,7 +85,12 @@ public class MiniStormSpawner : MonoBehaviour
 
     Vector3 GenerateStormScale()
     {
-        float randomScale = Random.Range(1, stormSizeRatio * playerManager.GetCurrentLevel());
+        float maxRnd = stormSizeRatio * playerManager.GetCurrentLevel();
+        if (maxRnd > 30)
+        {
+            maxRnd = 30;
+        }
+        float randomScale = Random.Range(1, maxRnd);
         return Vector3.one * randomScale;
     }
 
