@@ -206,14 +206,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stormDamageValue: 10
-  stormDamageRate: 1
-  sizeLimit: 30
-  expandRate: 0.02
+  stormDamageRate: 2
+  sizeLimit: 25
+  expandRate: 0.01
   pulseRange: 0.8
   pulseRate: 2
   pulsing: 1
   chaseRate: 0.1
-  maxSpeed: 2
+  maxSpeed: 1.5
   SelectedIndicator: {fileID: 3551648277271768243}
 --- !u!95 &4726777173044813241
 Animator:

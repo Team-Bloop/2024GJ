@@ -192,7 +192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialTimeToCollect: 1
   targetColor: {r: 1, g: 1, b: 1, a: 0}
-  heal: 10
+  heal: 20
 --- !u!95 &1433365049406504815
 Animator:
   serializedVersion: 5
