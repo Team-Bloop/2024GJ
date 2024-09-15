@@ -27,7 +27,7 @@ public class BasicOrb : OrbBase
         Debug.Log($"Current Charge: {player.IncreaseCharges(charge)}");*/
         player.IncreaseEXP(exp);
         player.IncreaseCharges(charge);
-        player.IncreaseScore(1);
+        player.IncreaseScore(Mathf.RoundToInt(0.5f * player.GetCurrentLevel()));
         base.OnCollected(collision);
     }
 }
